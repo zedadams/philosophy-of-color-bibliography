@@ -327,14 +327,11 @@ function ghStatus(msg) {
 }
 
 function loadFromGitHub(callback) {
-  if (!GITHUB_TOKEN) {
-    loadData();
-    callback();
-    return;
-  }
   ghStatus("Loading...");
+  var fetchHeaders = {};
+  if (GITHUB_TOKEN) fetchHeaders["Authorization"] = "token " + GITHUB_TOKEN;
   fetch("https://api.github.com/repos/" + GITHUB_REPO + "/contents/" + GITHUB_FILE, {
-    headers: { "Authorization": "token " + GITHUB_TOKEN }
+    headers: fetchHeaders
   })
   .then(function(r) {
     if (r.status === 404) {
