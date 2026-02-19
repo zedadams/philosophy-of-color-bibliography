@@ -1,20 +1,140 @@
 {
   "topics": [
     {
-      "id": "abc",
-      "name": "ABC"
+      "id": "topic_1771520009387_0",
+      "name": "Akins"
     },
     {
-      "id": "def",
-      "name": "DEF"
+      "id": "topic_1771520009387_1",
+      "name": "Aristotle"
     },
     {
-      "id": "ghi",
-      "name": "GHI"
+      "id": "topic_1771520009387_2",
+      "name": "Art"
     },
     {
-      "id": "topic_1771525639531_0",
-      "name": "hello"
+      "id": "topic_1771520009387_3",
+      "name": "Broackes"
+    },
+    {
+      "id": "topic_1771520009387_4",
+      "name": "Cézanne"
+    },
+    {
+      "id": "topic_1771520009387_5",
+      "name": "Chirimuuta"
+    },
+    {
+      "id": "topic_1771520009387_6",
+      "name": "Color Blindness"
+    },
+    {
+      "id": "topic_1771520009387_7",
+      "name": "Color Categorization"
+    },
+    {
+      "id": "topic_1771520009387_8",
+      "name": "Color Constancy"
+    },
+    {
+      "id": "topic_1771520009387_10",
+      "name": "Color Science"
+    },
+    {
+      "id": "topic_1771520009387_9",
+      "name": "Colorimetry"
+    },
+    {
+      "id": "topic_1771520009387_11",
+      "name": "Democritus"
+    },
+    {
+      "id": "topic_1771520009387_12",
+      "name": "Descartes"
+    },
+    {
+      "id": "topic_1771520009387_13",
+      "name": "Dispositionalism"
+    },
+    {
+      "id": "topic_1771520009387_14",
+      "name": "Ecological View"
+    },
+    {
+      "id": "topic_1771520009387_15",
+      "name": "Eliminativism"
+    },
+    {
+      "id": "topic_1771520009387_16",
+      "name": "Evolution of Color Vision"
+    },
+    {
+      "id": "topic_1771520009387_17",
+      "name": "Folk Psychology"
+    },
+    {
+      "id": "topic_1771520009387_18",
+      "name": "Genealogical Method"
+    },
+    {
+      "id": "topic_1771520009387_19",
+      "name": "Goethe"
+    },
+    {
+      "id": "topic_1771520009387_20",
+      "name": "Hardin"
+    },
+    {
+      "id": "topic_1771520009387_21",
+      "name": "Holism"
+    },
+    {
+      "id": "topic_1771520009387_22",
+      "name": "Interspecies Variation"
+    },
+    {
+      "id": "topic_1771520009387_23",
+      "name": "Inverted Spectrum"
+    },
+    {
+      "id": "topic_1771520009387_24",
+      "name": "Linguistic Relativism"
+    },
+    {
+      "id": "topic_1771520009387_25",
+      "name": "Measurement"
+    },
+    {
+      "id": "topic_1771520009387_26",
+      "name": "Mental Architecture"
+    },
+    {
+      "id": "topic_1771520009387_27",
+      "name": "Nature/Nurture"
+    },
+    {
+      "id": "topic_1771520009387_28",
+      "name": "Other Minds Skepticism"
+    },
+    {
+      "id": "topic_1771520009387_29",
+      "name": "Perceptual Learning"
+    },
+    {
+      "id": "topic_1771520009387_30",
+      "name": "Realism/Nominalism"
+    },
+    {
+      "id": "topic_1771520009387_31",
+      "name": "Sensory Substitution"
+    },
+    {
+      "id": "topic_1771520009387_32",
+      "name": "Shadows"
+    },
+    {
+      "id": "topic_1771520009387_33",
+      "name": "Unique/Binary Hues"
     }
   ],
   "entries": [
@@ -24,12 +144,9 @@
       "shortSummary": "JKL",
       "longSummary": "PPP QQQ RRR",
       "url": "",
-      "dateAdded": "2026-02-19T18:27:10.974Z",
-      "dateModified": "2026-02-19T18:27:10.974Z",
-      "topics": [
-        "abc",
-        "def"
-      ],
+      "dateAdded": "2026-02-19T16:36:24.748Z",
+      "dateModified": "2026-02-19T16:36:24.748Z",
+      "topics": [],
       "quotations": [],
       "summaryHistory": [],
       "seeAlso": [],
@@ -42,11 +159,654 @@
       "shortSummary": "MNO",
       "longSummary": "SSS TTT UUU",
       "url": "",
-      "dateAdded": "2026-02-19T18:27:10.974Z",
-      "dateModified": "2026-02-19T18:27:10.974Z",
+      "dateAdded": "2026-02-19T16:36:24.748Z",
+      "dateModified": "2026-02-19T16:36:24.748Z",
+      "topics": [],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520247043_0",
+      "citation": "Akins, K. (1996). Of sensory systems and the âaboutnessâ of mental states. The Journal of Philosophy, 93(7), 337â372.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T16:57:27.043Z",
+      "dateModified": "2026-02-19T16:57:27.043Z",
       "topics": [
-        "def",
-        "ghi"
+        "topic_1771520009387_0"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520247043_2",
+      "citation": "Akins, K. (2013). Black and white and colour. In R. Brown (Ed.), Consciousness inside and out: Phenomenology, neuroscience, and the nature of experience (pp. 173-223). Springer.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T16:57:27.043Z",
+      "dateModified": "2026-02-19T17:32:34.632Z",
+      "topics": [
+        "topic_1771520009387_0"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520247043_4",
+      "citation": "Akins, K., & Hahn, M. (2000). The peculiarity of color. In S. Davis (Ed.), Color perception: Philosophical, psychological, artistic, and computational perspectives (pp. 215â257). Oxford University Press.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T16:57:27.043Z",
+      "dateModified": "2026-02-19T16:57:27.043Z",
+      "topics": [
+        "topic_1771520009387_0"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520247043_6",
+      "citation": "Akins, K., & Hahn, M. (2014). More than mere colouring: The role of spectral information in human vision. The British Journal for the Philosophy of Science, 65(1) 125-171.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T16:57:27.043Z",
+      "dateModified": "2026-02-19T16:57:27.043Z",
+      "topics": [
+        "topic_1771520009387_0"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520247043_8",
+      "citation": "Akins, K., & Hahn, M. (2023). Colour bit-by-bit: The puzzle of colour development. In Conscious and unconscious mentality (pp. 274â310). Routledge.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T16:57:27.043Z",
+      "dateModified": "2026-02-19T16:57:27.043Z",
+      "topics": [
+        "topic_1771520009387_0"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520247043_10",
+      "citation": "Akins, K., Hahn, M., & Matthen, M. (2015). Colour perception. In M. Matthen (Ed.), The Oxford handbook of philosophy of perception (pp. 423â440). Oxford University Press.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T16:57:27.043Z",
+      "dateModified": "2026-02-19T16:57:27.043Z",
+      "topics": [
+        "topic_1771520009387_0"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771524000462_0",
+      "citation": "Baldes, R. W. (1975). Democritus on visual perception: Two theories or one? Phronesis, 20(2), 93–105.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T18:00:00.462Z",
+      "dateModified": "2026-02-19T18:00:00.462Z",
+      "topics": [
+        "topic_1771520009387_11"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771524000462_2",
+      "citation": "Baldes, R. W. (1978). Democritus on the nature and perception of “black” and “white.” Phronesis, 23(2), 87–100.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T18:00:00.462Z",
+      "dateModified": "2026-02-19T18:00:00.462Z",
+      "topics": [
+        "topic_1771520009387_11"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771524000462_4",
+      "citation": "Barnes, J. (1982). The Presocratic philosophers (Rev. ed.). London, England: Routledge & Kegan Paul.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T18:00:00.462Z",
+      "dateModified": "2026-02-19T18:00:00.462Z",
+      "topics": [
+        "topic_1771520009387_11"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771524000462_6",
+      "citation": "Berryman, S. (2022). Ancient atomism. In E. N. Zalta & U. Nodelman (Eds.), The Stanford encyclopedia of philosophy (Winter 2022 ed.). Stanford University. Retrieved from https://plato.stanford.edu/archives/win2022/entries/atomism-ancient/",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T18:00:00.462Z",
+      "dateModified": "2026-02-19T18:00:00.462Z",
+      "topics": [
+        "topic_1771520009387_11"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771524000462_8",
+      "citation": "Berryman, S. (2023). Democritus. In E. N. Zalta & U. Nodelman (Eds.), The Stanford encyclopedia of philosophy (Spring 2023 ed.). Stanford University. Retrieved from https://plato.stanford.edu/archives/spr2023/entries/democritus/",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T18:00:00.462Z",
+      "dateModified": "2026-02-19T18:00:00.462Z",
+      "topics": [
+        "topic_1771520009387_11"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520755816_2",
+      "citation": "Broackes, J. (1997). Could we take lime, purple, orange, and teal as unique hues? Behavioral and Brain Sciences, 20(2), 183–184.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T17:05:55.816Z",
+      "dateModified": "2026-02-19T17:05:55.816Z",
+      "topics": [
+        "topic_1771520009387_4"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520852173_2",
+      "citation": "Broackes, J. (1997). Could we take lime, purple, orange, and teal as unique hues? Behavioral and Brain Sciences, 20(2), 183–184.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T17:07:32.173Z",
+      "dateModified": "2026-02-19T17:07:32.173Z",
+      "topics": [
+        "topic_1771520009387_3"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520755816_4",
+      "citation": "Broackes, J. (1999). Aristotle, objectivity, and perception. Oxford Studies in Ancient Philosophy, 17, 1–36.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T17:05:55.816Z",
+      "dateModified": "2026-02-19T17:05:55.816Z",
+      "topics": [
+        "topic_1771520009387_4"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520852173_4",
+      "citation": "Broackes, J. (1999). Aristotle, objectivity, and perception. Oxford Studies in Ancient Philosophy, 17, 1–36.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T17:07:32.173Z",
+      "dateModified": "2026-02-19T17:07:32.173Z",
+      "topics": [
+        "topic_1771520009387_3"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520755816_6",
+      "citation": "Broackes, J. (2007). Black and white and the inverted spectrum. The Philosophical Quarterly, 57(227), 161–175.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T17:05:55.816Z",
+      "dateModified": "2026-02-19T17:05:55.816Z",
+      "topics": [
+        "topic_1771520009387_4"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520852173_6",
+      "citation": "Broackes, J. (2007). Black and white and the inverted spectrum. The Philosophical Quarterly, 57(227), 161–175.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T17:07:32.173Z",
+      "dateModified": "2026-02-19T17:07:32.173Z",
+      "topics": [
+        "topic_1771520009387_3"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520755816_8",
+      "citation": "Broackes, J. (2011). Where do the unique hues come from? Review of Philosophy and Psychology, 2(4), 601–628.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T17:05:55.816Z",
+      "dateModified": "2026-02-19T17:05:55.816Z",
+      "topics": [
+        "topic_1771520009387_4"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520852173_8",
+      "citation": "Broackes, J. (2011). Where do the unique hues come from? Review of Philosophy and Psychology, 2(4), 601–628.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T17:07:32.173Z",
+      "dateModified": "2026-02-19T17:07:32.173Z",
+      "topics": [
+        "topic_1771520009387_3"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520806444_2",
+      "citation": "Chirimuuta, M. (2017). Outside color: Perceptual science and the puzzle of color in philosophy. MIT Press.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T17:06:46.444Z",
+      "dateModified": "2026-02-19T17:06:46.444Z",
+      "topics": [
+        "topic_1771520009387_5"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520806444_4",
+      "citation": "Cohen, J. (2015). Review of M. Chirimuuta, Outside color: Perceptual science and the puzzle of color in philosophy. Notre Dame Philosophical Reviews.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T17:06:46.444Z",
+      "dateModified": "2026-02-19T17:06:46.444Z",
+      "topics": [
+        "topic_1771520009387_5"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771524000462_10",
+      "citation": "Curd, P. K. (2001). Why Democritus was not a skeptic. In A. Preus (Ed.), Before Plato: Essays in ancient Greek philosophy VI (pp. 149–169). Albany, NY: SUNY Press.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T18:00:00.462Z",
+      "dateModified": "2026-02-19T18:00:00.462Z",
+      "topics": [
+        "topic_1771520009387_11"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771524000462_12",
+      "citation": "English, R. B. (1915). Democritus’ theory of sense perception. Transactions and Proceedings of the American Philological Association, 46, 217–227.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T18:00:00.462Z",
+      "dateModified": "2026-02-19T18:00:00.462Z",
+      "topics": [
+        "topic_1771520009387_11"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771524000462_14",
+      "citation": "Furley, D. (1993). Democritus and Epicurus on sensible qualities. In J. Brunschwig & M. C. Nussbaum (Eds.), Passions and perceptions: Studies in Hellenistic philosophy of mind (pp. 72–94). Cambridge, England: Cambridge University Press.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T18:00:00.462Z",
+      "dateModified": "2026-02-19T18:00:00.462Z",
+      "topics": [
+        "topic_1771520009387_11"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771524000462_16",
+      "citation": "Guthrie, W. K. C. (1965). A history of Greek philosophy: Vol. 2. The Presocratic tradition from Parmenides to Democritus (p. 502). Cambridge, England: Cambridge University Press.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T18:00:00.462Z",
+      "dateModified": "2026-02-19T18:00:00.462Z",
+      "topics": [
+        "topic_1771520009387_11"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771524000462_18",
+      "citation": "Guthrie, W. K. C. (1969). A history of Greek philosophy: Vol. 3. The sophists and Socrates (Chap. 4). Cambridge, England: Cambridge University Press.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T18:00:00.462Z",
+      "dateModified": "2026-02-19T18:00:00.462Z",
+      "topics": [
+        "topic_1771520009387_11"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771524000462_20",
+      "citation": "Hahm, D. E. (1978). Early Hellenistic theories of vision and the perception of color. In R. Machamer & R. Turnbull (Eds.), Studies in perception: Interrelations in the history of philosophy and science (pp. 60–95). Columbus, OH: Ohio State University Press.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T18:00:00.462Z",
+      "dateModified": "2026-02-19T18:00:00.462Z",
+      "topics": [
+        "topic_1771520009387_11"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771524000462_22",
+      "citation": "Kahn, C. H. (1981). The origins of social contract theory. In G. B. Kerferd (Ed.), The sophists and their legacy (Hermes Einzelschriften 44, pp. 92–108). Wiesbaden, Germany: Franz Steiner Verlag.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T18:00:00.462Z",
+      "dateModified": "2026-02-19T18:00:00.462Z",
+      "topics": [
+        "topic_1771520009387_11"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771524000462_24",
+      "citation": "Lee, M.-K. (2011). The distinction between primary and secondary qualities in ancient Greek philosophy. In L. Nolan (Ed.), Primary and secondary qualities: The historical and ongoing debate (pp. 15–40). Oxford, England: Oxford University Press.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T18:00:00.462Z",
+      "dateModified": "2026-02-19T18:00:00.462Z",
+      "topics": [
+        "topic_1771520009387_11"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771524000462_26",
+      "citation": "Machamer, P., & Turnbull, R. (Eds.). (1978). Studies in perception: Interrelations in the history of philosophy and science. Columbus, OH: Ohio State University Press.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T18:00:00.462Z",
+      "dateModified": "2026-02-19T18:00:00.462Z",
+      "topics": [
+        "topic_1771520009387_11"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771524000462_28",
+      "citation": "O’Keefe, T. (1997). The ontological status of sensible qualities for Democritus and Epicurus. Ancient Philosophy, 17, 119–134.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T18:00:00.462Z",
+      "dateModified": "2026-02-19T18:00:00.462Z",
+      "topics": [
+        "topic_1771520009387_11"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771524000462_30",
+      "citation": "Osborne, H. (1968). Colour concepts of the ancient Greeks. British Journal of Aesthetics, 8(1), 40–51.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T18:00:00.462Z",
+      "dateModified": "2026-02-19T18:00:00.462Z",
+      "topics": [
+        "topic_1771520009387_11"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771524000462_32",
+      "citation": "Pasnau, R. (2007). Democritus and secondary qualities. Archiv für Geschichte der Philosophie, 89(1), 99–121.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T18:00:00.462Z",
+      "dateModified": "2026-02-19T18:00:00.462Z",
+      "topics": [
+        "topic_1771520009387_11"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771524000462_36",
+      "citation": "Sedley, D. (1988). Epicurean anti-reductionism. In J. Barnes & M. Mignucci (Eds.), Matter and metaphysics (pp. 295–327). Naples, Italy: Bibliopolis.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T18:00:00.462Z",
+      "dateModified": "2026-02-19T18:00:00.462Z",
+      "topics": [
+        "topic_1771520009387_11"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771524000462_34",
+      "citation": "Siegel, R. E. (1959). Theories of vision and color perception of Empedocles and Democritus: Some similarities to the modern approach. Bulletin of the History of Medicine, 33, 145–160.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T18:00:00.462Z",
+      "dateModified": "2026-02-19T18:00:00.462Z",
+      "topics": [
+        "topic_1771520009387_11"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771524000462_38",
+      "citation": "Taylor, C. C. W. (1999). The atomists. In A. A. Long (Ed.), The Cambridge companion to early Greek philosophy (pp. 181–204). Cambridge, England: Cambridge University Press.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T18:00:00.462Z",
+      "dateModified": "2026-02-19T18:00:00.462Z",
+      "topics": [
+        "topic_1771520009387_11"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771524000462_40",
+      "citation": "Taylor, C. C. W. (2007). Nomos and phusis in Democritus and Plato. Social Philosophy and Policy, 24(1), 1–20.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T18:00:00.462Z",
+      "dateModified": "2026-02-19T18:00:00.462Z",
+      "topics": [
+        "topic_1771520009387_11"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520247043_12",
+      "citation": "Watson, M. R., Akins, K. A., Spiker, C., Crawford, L., & Enns, J. T. (2014). Synesthesia and learning: a critical review and novel theory. Frontiers in Human Neuroscience, 8, 98.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T16:57:27.043Z",
+      "dateModified": "2026-02-19T16:57:27.043Z",
+      "topics": [
+        "topic_1771520009387_0"
       ],
       "quotations": [],
       "summaryHistory": [],
