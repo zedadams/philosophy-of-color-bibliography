@@ -4,27 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Annotated Bibliography</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <h1>Annotated Bibliography</h1>
+        <nav>
+            <ul>
+                <li><a href="#add-entry">Add Entry</a></li>
+                <li><a href="#export">Export</a></li>
+                <li><a href="#import">Import</a></li>
+            </ul>
+        </nav>
     </header>
     <main>
-        <section>
-            <h2>Entry 1</h2>
-            <p>This is a sample annotation for the first entry.</p>
+        <section id="add-entry">
+            <h2>Add New Entry</h2>
+            <form id="entry-form">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+                <label for="author">Author:</label>
+                <input type="text" id="author" name="author" required>
+                <label for="year">Year:</label>
+                <input type="number" id="year" name="year" required>
+                <label for="keywords">Keywords:</label>
+                <input type="text" id="keywords" name="keywords">
+                <button type="submit">Add Entry</button>
+            </form>
         </section>
-        <section>
-            <h2>Entry 2</h2>
-            <p>This is a sample annotation for the second entry.</p>
+        <section id="bibliography">
+            <h2>Your Entries</h2>
+            <ul id="entry-list"></ul>
         </section>
-        <section>
-            <h2>Entry 3</h2>
-            <p>This is a sample annotation for the third entry.</p>
+        <section id="export">
+            <h2>Export Options</h2>
+            <button id="export-pdf">Export as PDF</button>
+            <button id="export-bibtex">Export as BibTeX</button>
+        </section>
+        <section id="import">
+            <h2>Import Bibliography</h2>
+            <input type="file" id="import-file">
+            <button id="import-bibtex">Import BibTeX</button>
         </section>
     </main>
     <footer>
-        <p>Compiled on 2026-02-19</p>
+        <p>&copy; 2026 Annotated Bibliography</p>
     </footer>
+    <script src="script.js"></script>
 </body>
 </html>
