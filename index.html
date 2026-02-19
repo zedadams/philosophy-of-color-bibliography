@@ -3,9 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
 <title>Zed's Annotated Bibliography on Color</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
 <style>
@@ -38,7 +35,7 @@ input[type="text"] { font-family: serif; font-size: inherit; }
 .entry-url a { color: #0066cc !important; }
 .date-badge { color: #888; font-size: 0.85em; margin-left: 10px; }
 @media print {
-  #sidebar, #password-page, button, .search-bar, .sort-bar, .edit-section, #sidebar-bottom, #sidebar-editor-controls, #sidebar-edit-area, #sidebar-remove-area { display: none !important; }
+  #sidebar, #password-page, button, .search-bar, .sort-bar, .edit-section, #sidebar-bottom, #sidebar-logout, #sidebar-editor-controls, #sidebar-edit-area, #sidebar-remove-area { display: none !important; }
   #main { display: block !important; }
   #content { padding: 0 !important; overflow: visible !important; height: auto !important; }
   #header { border-bottom: 2px solid #000; margin-bottom: 12px; }
@@ -90,8 +87,7 @@ input[type="text"] { font-family: serif; font-size: inherit; }
 <button onclick="undo()">Undo</button>
 <br>
 <button onclick="saveToGitHub()">Save to GitHub</button>
-<div id="github-status" style="margin-top: 6px; font-size: 0.85em; padding: 4px 6px; border-radius: 3px;"></div>
-<div id="github-verify-link" style="margin-top: 4px; font-size: 0.8em;"></div>
+<div id="github-status" style="margin-top: 4px;"></div>
 <br>
 <button onclick="exportData()">Save to file</button>
 <button onclick="document.getElementById('import-file').click()">Load from file</button>
@@ -108,8 +104,9 @@ input[type="text"] { font-family: serif; font-size: inherit; }
 <div id="sidebar-bottom">
 <button onclick="changeEditorPasswordUI()">Change editor password</button>
 <button onclick="changeReadonlyPasswordUI()">Change read-only password</button>
-<button onclick="configureGitHubTokenUI()">Set GitHub token</button>
-<button onclick="logout()">Log out</button>
+</div>
+<div id="sidebar-logout" style="margin-top: 10px; border-top: 1px solid #ccc; padding-top: 10px;">
+<button onclick="logOut()">Log Out</button>
 </div>
 </div>
 <div id="content"></div>
@@ -219,6 +216,17 @@ function cancelPasswordChange() {
   showHome();
 }
 
+function logOut() {
+  document.cookie = "zed_biblio_auth=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;SameSite=Lax";
+  document.getElementById("site").style.display = "none";
+  document.getElementById("password-page").style.display = "block";
+  document.getElementById("password-readonly").value = "";
+  document.getElementById("password-editor").value = "";
+  document.getElementById("password-error-readonly").textContent = "";
+  document.getElementById("password-error-editor").textContent = "";
+  readOnly = false;
+}
+
 function saveEditorPassword() {
   var current = document.getElementById("current-pw").value;
   var newPw = document.getElementById("new-pw").value;
@@ -271,14 +279,6 @@ function saveReadonlyPassword() {
   }, 2000);
 }
 
-function logout() {
-  document.cookie = "zed_biblio_auth=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;SameSite=Lax";
-  document.getElementById("site").style.display = "none";
-  document.getElementById("password-page").style.display = "block";
-  document.getElementById("password-readonly").value = "";
-  document.getElementById("password-editor").value = "";
-}
-
 function enterSite() {
   document.getElementById("password-page").style.display = "none";
   document.getElementById("site").style.display = "block";
@@ -299,6 +299,13 @@ function applyAccessMode() {
   document.getElementById("editor-export-btns").style.display = hide;
 }
 
+// =============================================================
+// GITHUB CONFIGURATION
+// =============================================================
+var GITHUB_TOKEN = "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";
+var GITHUB_REPO = "zedadams/color-bibliography";
+var GITHUB_FILE = "data.json";
+
 var cookieVal = getCookie("zed_biblio_auth");
 if (cookieVal === "editor" || cookieVal === "granted") {
   readOnly = false;
@@ -308,86 +315,25 @@ if (cookieVal === "editor" || cookieVal === "granted") {
   enterSite();
 }
 
-// =============================================================
-// GITHUB CONFIGURATION
-// =============================================================
-var GITHUB_TOKEN = getCookie("zed_github_token") || "YOUR_TOKEN_HERE";
-var GITHUB_REPO = "zedadams/philosophy-of-color-bibliography";
-var GITHUB_FILE = "data.json";
-
-function configureGitHubTokenUI() {
-  var content = document.getElementById("content");
-  var current = getCookie("zed_github_token") || "";
-  var masked = current ? (current.substring(0, 4) + "••••••••••••••••" + current.slice(-4)) : "Not set";
-  content.innerHTML = '<div style="padding:10px;">' +
-    '<b>Set GitHub Token</b><br><br>' +
-    '<div>Current token: <span style="font-family:monospace;">' + masked + '</span></div><br>' +
-    '<div>Paste your new GitHub personal access token:</div>' +
-    '<input type="password" id="github-token-input" style="width:350px; font-family:monospace; font-size:inherit; margin-top:6px;" placeholder="ghp_...">' +
-    '<br><br>' +
-    '<button onclick="saveGitHubToken()">Save token</button> ' +
-    '<button onclick="clearGitHubToken()">Clear token</button> ' +
-    '<button onclick="showHome()">Cancel</button>' +
-    '<div id="token-msg" style="margin-top:10px;"></div>' +
-    '</div>';
-}
-
-function saveGitHubToken() {
-  var val = document.getElementById("github-token-input").value.trim();
-  if (!val) {
-    document.getElementById("token-msg").textContent = "Please enter a token.";
-    return;
-  }
-  setCookie("zed_github_token", val);
-  GITHUB_TOKEN = val;
-  document.getElementById("token-msg").textContent = "Token saved! You can now use Save to GitHub.";
-  setTimeout(function() { showHome(); }, 1500);
-}
-
-function clearGitHubToken() {
-  document.cookie = "zed_github_token=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;SameSite=Lax";
-  GITHUB_TOKEN = "YOUR_TOKEN_HERE";
-  document.getElementById("token-msg").textContent = "Token cleared.";
-  setTimeout(function() { showHome(); }, 1000);
-}
-
 var githubSha = null;
 
-function ghStatus(msg, type) {
-  var el = document.getElementById("github-status");
-  var verifyEl = document.getElementById("github-verify-link");
-  el.textContent = msg;
-  // Color code by type
-  if (type === "success") {
-    el.style.background = "#e6f4ea";
-    el.style.color = "#1a7f37";
-    // Show a link to verify on GitHub
-    verifyEl.innerHTML = '<a href="https://github.com/' + GITHUB_REPO + '/blob/main/' + GITHUB_FILE + '" target="_blank" style="color:#0066cc;">Verify on GitHub ↗</a>';
-  } else if (type === "error") {
-    el.style.background = "#fde8e8";
-    el.style.color = "#c00";
-    verifyEl.innerHTML = "";
-  } else {
-    el.style.background = "#f0f0f0";
-    el.style.color = "#333";
-    verifyEl.innerHTML = "";
-  }
+function ghStatus(msg) {
+  document.getElementById("github-status").textContent = msg;
 }
 
 function loadFromGitHub(callback) {
-  if (GITHUB_TOKEN === "YOUR_TOKEN_HERE") {
+  if (!GITHUB_TOKEN) {
     loadData();
     callback();
     return;
   }
-  ghStatus("Loading...", "info");
-  var cacheBust = "?t=" + new Date().getTime();
-  fetch("https://api.github.com/repos/" + GITHUB_REPO + "/contents/" + GITHUB_FILE + cacheBust, {
-    headers: { "Authorization": "token " + GITHUB_TOKEN, "Cache-Control": "no-cache" }
+  ghStatus("Loading...");
+  fetch("https://api.github.com/repos/" + GITHUB_REPO + "/contents/" + GITHUB_FILE, {
+    headers: { "Authorization": "token " + GITHUB_TOKEN }
   })
   .then(function(r) {
     if (r.status === 404) {
-      ghStatus("No data on GitHub yet.", "info");
+      ghStatus("No data on GitHub yet.");
       loadData();
       callback();
       return null;
@@ -406,63 +352,38 @@ function loadFromGitHub(callback) {
     dismissedDuplicates = parsed.dismissedDuplicates || [];
     migrateEntries();
     autoSave();
-    ghStatus("Loaded from GitHub.", "success");
+    ghStatus("Loaded from GitHub.");
     callback();
   })
   .catch(function(err) {
-    ghStatus("GitHub load failed, using local data.", "error");
+    ghStatus("GitHub load failed, using local data.");
     loadData();
     callback();
   });
 }
 
 function saveToGitHub() {
-  if (GITHUB_TOKEN === "YOUR_TOKEN_HERE") {
-    ghStatus("Configure GitHub token first.", "error");
-    return;
-  }
-  ghStatus("Saving...", "info");
-  // Always fetch the latest sha before saving to avoid conflicts on refresh
+  ghStatus("Saving...");
+  var content = btoa(unescape(encodeURIComponent(
+    JSON.stringify({ topics: topics, entries: entries, sitePassword: sitePassword, readonlyPassword: readonlyPassword, dismissedDuplicates: dismissedDuplicates }, null, 2)
+  )));
+  var body = { message: "Update bibliography", content: content };
+  if (githubSha) body.sha = githubSha;
   fetch("https://api.github.com/repos/" + GITHUB_REPO + "/contents/" + GITHUB_FILE, {
-    headers: { "Authorization": "token " + GITHUB_TOKEN }
-  })
-  .then(function(r) {
-    if (r.status === 404) return null;
-    return r.json();
-  })
-  .then(function(existing) {
-    var content = btoa(unescape(encodeURIComponent(
-      JSON.stringify({ topics: topics, entries: entries, sitePassword: sitePassword, readonlyPassword: readonlyPassword, dismissedDuplicates: dismissedDuplicates }, null, 2)
-    )));
-    var body = {
-      message: "Update bibliography",
-      content: content
-    };
-    if (existing && existing.sha) {
-      body.sha = existing.sha;
-      githubSha = existing.sha;
-    }
-    return fetch("https://api.github.com/repos/" + GITHUB_REPO + "/contents/" + GITHUB_FILE, {
-      method: "PUT",
-      headers: {
-        "Authorization": "token " + GITHUB_TOKEN,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(body)
-    });
+    method: "PUT",
+    headers: { "Authorization": "token " + GITHUB_TOKEN, "Content-Type": "application/json" },
+    body: JSON.stringify(body)
   })
   .then(function(r) { return r.json(); })
   .then(function(data) {
     if (data.content && data.content.sha) {
       githubSha = data.content.sha;
-      ghStatus("Saved to GitHub ✓", "success");
+      ghStatus("Saved to GitHub.");
     } else {
-      ghStatus("Error: " + (data.message || "unknown"), "error");
+      ghStatus("Error: " + (data.message || "unknown"));
     }
   })
-  .catch(function(err) {
-    ghStatus("Save failed: " + err.message, "error");
-  });
+  .catch(function(err) { ghStatus("Save failed: " + err.message); });
 }
 
 // --- DATA ---
