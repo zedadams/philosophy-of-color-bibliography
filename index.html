@@ -403,23 +403,34 @@ function saveToGitHub() {
     return;
   }
   ghStatus("Saving...");
-  var content = btoa(unescape(encodeURIComponent(
-    JSON.stringify({ topics: topics, entries: entries, sitePassword: sitePassword, readonlyPassword: readonlyPassword, dismissedDuplicates: dismissedDuplicates }, null, 2)
-  )));
-  var body = {
-    message: "Update bibliography",
-    content: content
-  };
-  if (githubSha) {
-    body.sha = githubSha;
-  }
+  // Always fetch the latest sha before saving to avoid conflicts on refresh
   fetch("https://api.github.com/repos/" + GITHUB_REPO + "/contents/" + GITHUB_FILE, {
-    method: "PUT",
-    headers: {
-      "Authorization": "token " + GITHUB_TOKEN,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(body)
+    headers: { "Authorization": "token " + GITHUB_TOKEN }
+  })
+  .then(function(r) {
+    if (r.status === 404) return null;
+    return r.json();
+  })
+  .then(function(existing) {
+    var content = btoa(unescape(encodeURIComponent(
+      JSON.stringify({ topics: topics, entries: entries, sitePassword: sitePassword, readonlyPassword: readonlyPassword, dismissedDuplicates: dismissedDuplicates }, null, 2)
+    )));
+    var body = {
+      message: "Update bibliography",
+      content: content
+    };
+    if (existing && existing.sha) {
+      body.sha = existing.sha;
+      githubSha = existing.sha;
+    }
+    return fetch("https://api.github.com/repos/" + GITHUB_REPO + "/contents/" + GITHUB_FILE, {
+      method: "PUT",
+      headers: {
+        "Authorization": "token " + GITHUB_TOKEN,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    });
   })
   .then(function(r) { return r.json(); })
   .then(function(data) {
