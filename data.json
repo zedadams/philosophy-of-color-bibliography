@@ -1,20 +1,140 @@
 {
   "topics": [
     {
-      "id": "abc",
-      "name": "ABC"
+      "id": "topic_1771520009387_0",
+      "name": "Akins"
     },
     {
-      "id": "def",
-      "name": "DEF"
+      "id": "topic_1771520009387_1",
+      "name": "Aristotle"
     },
     {
-      "id": "ghi",
-      "name": "GHI"
+      "id": "topic_1771520009387_2",
+      "name": "Art"
     },
     {
-      "id": "topic_1771519393554_0",
-      "name": "Test"
+      "id": "topic_1771520009387_3",
+      "name": "Broackes"
+    },
+    {
+      "id": "topic_1771520009387_4",
+      "name": "Cézanne"
+    },
+    {
+      "id": "topic_1771520009387_5",
+      "name": "Chirimuuta"
+    },
+    {
+      "id": "topic_1771520009387_6",
+      "name": "Color Blindness"
+    },
+    {
+      "id": "topic_1771520009387_7",
+      "name": "Color Categorization"
+    },
+    {
+      "id": "topic_1771520009387_8",
+      "name": "Color Constancy"
+    },
+    {
+      "id": "topic_1771520009387_10",
+      "name": "Color Science"
+    },
+    {
+      "id": "topic_1771520009387_9",
+      "name": "Colorimetry"
+    },
+    {
+      "id": "topic_1771520009387_11",
+      "name": "Democritus"
+    },
+    {
+      "id": "topic_1771520009387_12",
+      "name": "Descartes"
+    },
+    {
+      "id": "topic_1771520009387_13",
+      "name": "Dispositionalism"
+    },
+    {
+      "id": "topic_1771520009387_14",
+      "name": "Ecological View"
+    },
+    {
+      "id": "topic_1771520009387_15",
+      "name": "Eliminativism"
+    },
+    {
+      "id": "topic_1771520009387_16",
+      "name": "Evolution of Color Vision"
+    },
+    {
+      "id": "topic_1771520009387_17",
+      "name": "Folk Psychology"
+    },
+    {
+      "id": "topic_1771520009387_18",
+      "name": "Genealogical Method"
+    },
+    {
+      "id": "topic_1771520009387_19",
+      "name": "Goethe"
+    },
+    {
+      "id": "topic_1771520009387_20",
+      "name": "Hardin"
+    },
+    {
+      "id": "topic_1771520009387_21",
+      "name": "Holism"
+    },
+    {
+      "id": "topic_1771520009387_22",
+      "name": "Interspecies Variation"
+    },
+    {
+      "id": "topic_1771520009387_23",
+      "name": "Inverted Spectrum"
+    },
+    {
+      "id": "topic_1771520009387_24",
+      "name": "Linguistic Relativism"
+    },
+    {
+      "id": "topic_1771520009387_25",
+      "name": "Measurement"
+    },
+    {
+      "id": "topic_1771520009387_26",
+      "name": "Mental Architecture"
+    },
+    {
+      "id": "topic_1771520009387_27",
+      "name": "Nature/Nurture"
+    },
+    {
+      "id": "topic_1771520009387_28",
+      "name": "Other Minds Skepticism"
+    },
+    {
+      "id": "topic_1771520009387_29",
+      "name": "Perceptual Learning"
+    },
+    {
+      "id": "topic_1771520009387_30",
+      "name": "Realism/Nominalism"
+    },
+    {
+      "id": "topic_1771520009387_31",
+      "name": "Sensory Substitution"
+    },
+    {
+      "id": "topic_1771520009387_32",
+      "name": "Shadows"
+    },
+    {
+      "id": "topic_1771520009387_33",
+      "name": "Unique/Binary Hues"
     }
   ],
   "entries": [
@@ -26,10 +146,7 @@
       "url": "",
       "dateAdded": "2026-02-19T16:36:24.748Z",
       "dateModified": "2026-02-19T16:36:24.748Z",
-      "topics": [
-        "abc",
-        "def"
-      ],
+      "topics": [],
       "quotations": [],
       "summaryHistory": [],
       "seeAlso": [],
@@ -44,10 +161,7 @@
       "url": "",
       "dateAdded": "2026-02-19T16:36:24.748Z",
       "dateModified": "2026-02-19T16:36:24.748Z",
-      "topics": [
-        "def",
-        "ghi"
-      ],
+      "topics": [],
       "quotations": [],
       "summaryHistory": [],
       "seeAlso": [],
