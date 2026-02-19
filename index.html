@@ -55,9 +55,9 @@ input[type="text"] { font-family: serif; font-size: inherit; }
 <button onclick="checkPasswordReadOnly()">Enter</button>
 <div id="password-error-readonly" style="margin-top: 6px;"></div>
 <br><br>
-<div>Editor's access:</div>
+<div>Editor's access (enter GitHub token):</div>
 <br>
-<input type="password" id="password-editor" style="font-family: serif; font-size: inherit;" onkeydown="if(event.key==='Enter')checkPasswordEditor()">
+<input type="password" id="editor-token" style="font-family: serif; font-size: inherit;" onkeydown="if(event.key==='Enter')checkPasswordEditor()" placeholder="github_pat_...">
 <button onclick="checkPasswordEditor()">Enter</button>
 <div id="password-error-editor" style="margin-top: 6px;"></div>
 </div>
@@ -155,13 +155,15 @@ function checkPasswordReadOnly() {
 
 function checkPasswordEditor() {
   loadData();
-  var input = document.getElementById("password-editor").value;
-  if (input === getStoredPassword()) {
+  var token = document.getElementById("editor-token").value.trim();
+  if (token.length > 10) {
+    sessionStorage.setItem("githubEditorToken", token);
+    GITHUB_TOKEN = token;
     readOnly = false;
     setCookie("zed_biblio_auth", "editor");
     enterSite();
   } else {
-    document.getElementById("password-error-editor").textContent = "Incorrect password.";
+    document.getElementById("password-error-editor").textContent = "Please enter a valid GitHub token.";
   }
 }
 
@@ -218,10 +220,12 @@ function cancelPasswordChange() {
 
 function logOut() {
   document.cookie = "zed_biblio_auth=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;SameSite=Lax";
+  sessionStorage.removeItem("githubEditorToken");
+  GITHUB_TOKEN = "";
   document.getElementById("site").style.display = "none";
   document.getElementById("password-page").style.display = "block";
   document.getElementById("password-readonly").value = "";
-  document.getElementById("password-editor").value = "";
+  document.getElementById("editor-token").value = "";
   document.getElementById("password-error-readonly").textContent = "";
   document.getElementById("password-error-editor").textContent = "";
   readOnly = false;
@@ -302,12 +306,13 @@ function applyAccessMode() {
 // =============================================================
 // GITHUB CONFIGURATION
 // =============================================================
-var GITHUB_TOKEN = "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";
+var GITHUB_TOKEN = sessionStorage.getItem("githubEditorToken") || "";
 var GITHUB_REPO = "zedadams/color-bibliography";
 var GITHUB_FILE = "data.json";
 
 var cookieVal = getCookie("zed_biblio_auth");
 if (cookieVal === "editor" || cookieVal === "granted") {
+  GITHUB_TOKEN = sessionStorage.getItem("githubEditorToken") || "";
   readOnly = false;
   enterSite();
 } else if (cookieVal === "readonly") {
