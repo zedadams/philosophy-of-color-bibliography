@@ -90,7 +90,8 @@ input[type="text"] { font-family: serif; font-size: inherit; }
 <button onclick="undo()">Undo</button>
 <br>
 <button onclick="saveToGitHub()">Save to GitHub</button>
-<div id="github-status" style="margin-top: 4px;"></div>
+<div id="github-status" style="margin-top: 6px; font-size: 0.85em; padding: 4px 6px; border-radius: 3px;"></div>
+<div id="github-verify-link" style="margin-top: 4px; font-size: 0.8em;"></div>
 <br>
 <button onclick="exportData()">Save to file</button>
 <button onclick="document.getElementById('import-file').click()">Load from file</button>
@@ -352,8 +353,25 @@ function clearGitHubToken() {
 
 var githubSha = null;
 
-function ghStatus(msg) {
-  document.getElementById("github-status").textContent = msg;
+function ghStatus(msg, type) {
+  var el = document.getElementById("github-status");
+  var verifyEl = document.getElementById("github-verify-link");
+  el.textContent = msg;
+  // Color code by type
+  if (type === "success") {
+    el.style.background = "#e6f4ea";
+    el.style.color = "#1a7f37";
+    // Show a link to verify on GitHub
+    verifyEl.innerHTML = '<a href="https://github.com/' + GITHUB_REPO + '/blob/main/' + GITHUB_FILE + '" target="_blank" style="color:#0066cc;">Verify on GitHub ↗</a>';
+  } else if (type === "error") {
+    el.style.background = "#fde8e8";
+    el.style.color = "#c00";
+    verifyEl.innerHTML = "";
+  } else {
+    el.style.background = "#f0f0f0";
+    el.style.color = "#333";
+    verifyEl.innerHTML = "";
+  }
 }
 
 function loadFromGitHub(callback) {
@@ -362,13 +380,14 @@ function loadFromGitHub(callback) {
     callback();
     return;
   }
-  ghStatus("Loading...");
-  fetch("https://api.github.com/repos/" + GITHUB_REPO + "/contents/" + GITHUB_FILE, {
-    headers: { "Authorization": "token " + GITHUB_TOKEN }
+  ghStatus("Loading...", "info");
+  var cacheBust = "?t=" + new Date().getTime();
+  fetch("https://api.github.com/repos/" + GITHUB_REPO + "/contents/" + GITHUB_FILE + cacheBust, {
+    headers: { "Authorization": "token " + GITHUB_TOKEN, "Cache-Control": "no-cache" }
   })
   .then(function(r) {
     if (r.status === 404) {
-      ghStatus("No data on GitHub yet.");
+      ghStatus("No data on GitHub yet.", "info");
       loadData();
       callback();
       return null;
@@ -387,11 +406,11 @@ function loadFromGitHub(callback) {
     dismissedDuplicates = parsed.dismissedDuplicates || [];
     migrateEntries();
     autoSave();
-    ghStatus("Loaded from GitHub.");
+    ghStatus("Loaded from GitHub.", "success");
     callback();
   })
   .catch(function(err) {
-    ghStatus("GitHub load failed, using local data.");
+    ghStatus("GitHub load failed, using local data.", "error");
     loadData();
     callback();
   });
@@ -399,10 +418,10 @@ function loadFromGitHub(callback) {
 
 function saveToGitHub() {
   if (GITHUB_TOKEN === "YOUR_TOKEN_HERE") {
-    ghStatus("Configure GitHub token first.");
+    ghStatus("Configure GitHub token first.", "error");
     return;
   }
-  ghStatus("Saving...");
+  ghStatus("Saving...", "info");
   // Always fetch the latest sha before saving to avoid conflicts on refresh
   fetch("https://api.github.com/repos/" + GITHUB_REPO + "/contents/" + GITHUB_FILE, {
     headers: { "Authorization": "token " + GITHUB_TOKEN }
@@ -436,13 +455,13 @@ function saveToGitHub() {
   .then(function(data) {
     if (data.content && data.content.sha) {
       githubSha = data.content.sha;
-      ghStatus("Saved to GitHub.");
+      ghStatus("Saved to GitHub ✓", "success");
     } else {
-      ghStatus("Error: " + (data.message || "unknown"));
+      ghStatus("Error: " + (data.message || "unknown"), "error");
     }
   })
   .catch(function(err) {
-    ghStatus("Save failed: " + err.message);
+    ghStatus("Save failed: " + err.message, "error");
   });
 }
 
