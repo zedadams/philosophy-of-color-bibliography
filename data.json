@@ -18,7 +18,7 @@
     },
     {
       "id": "topic_1771520009387_4",
-      "name": "Cézanne"
+      "name": "CÃ©zanne"
     },
     {
       "id": "topic_1771520009387_5",
@@ -162,6 +162,125 @@
       "dateAdded": "2026-02-19T16:36:24.748Z",
       "dateModified": "2026-02-19T16:36:24.748Z",
       "topics": [],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520247043_0",
+      "citation": "Akins, K. (1996). Of sensory systems and the “aboutness” of mental states. The Journal of Philosophy, 93(7), 337–372.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T16:57:27.043Z",
+      "dateModified": "2026-02-19T16:57:27.043Z",
+      "topics": [
+        "topic_1771520009387_0"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520247043_2",
+      "citation": "Akins, K. (2013). Black and white and colour. In R. Brown (Ed.), Consciousness inside and out: Phenomenology, neuroscience, and the nature of experience (pp. 173–223). Springer.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T16:57:27.043Z",
+      "dateModified": "2026-02-19T16:57:27.043Z",
+      "topics": [
+        "topic_1771520009387_0"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520247043_4",
+      "citation": "Akins, K., & Hahn, M. (2000). The peculiarity of color. In S. Davis (Ed.), Color perception: Philosophical, psychological, artistic, and computational perspectives (pp. 215–257). Oxford University Press.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T16:57:27.043Z",
+      "dateModified": "2026-02-19T16:57:27.043Z",
+      "topics": [
+        "topic_1771520009387_0"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520247043_6",
+      "citation": "Akins, K., & Hahn, M. (2014). More than mere colouring: The role of spectral information in human vision. The British Journal for the Philosophy of Science, 65(1) 125-171.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T16:57:27.043Z",
+      "dateModified": "2026-02-19T16:57:27.043Z",
+      "topics": [
+        "topic_1771520009387_0"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520247043_8",
+      "citation": "Akins, K., & Hahn, M. (2023). Colour bit-by-bit: The puzzle of colour development. In Conscious and unconscious mentality (pp. 274–310). Routledge.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T16:57:27.043Z",
+      "dateModified": "2026-02-19T16:57:27.043Z",
+      "topics": [
+        "topic_1771520009387_0"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520247043_10",
+      "citation": "Akins, K., Hahn, M., & Matthen, M. (2015). Colour perception. In M. Matthen (Ed.), The Oxford handbook of philosophy of perception (pp. 423–440). Oxford University Press.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T16:57:27.043Z",
+      "dateModified": "2026-02-19T16:57:27.043Z",
+      "topics": [
+        "topic_1771520009387_0"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771520247043_12",
+      "citation": "Watson, M. R., Akins, K. A., Spiker, C., Crawford, L., & Enns, J. T. (2014). Synesthesia and learning: a critical review and novel theory. Frontiers in Human Neuroscience, 8, 98.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-19T16:57:27.043Z",
+      "dateModified": "2026-02-19T16:57:27.043Z",
+      "topics": [
+        "topic_1771520009387_0"
+      ],
       "quotations": [],
       "summaryHistory": [],
       "seeAlso": [],
