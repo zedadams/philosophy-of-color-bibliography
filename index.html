@@ -311,7 +311,7 @@ if (cookieVal === "editor" || cookieVal === "granted") {
 // =============================================================
 // GITHUB CONFIGURATION
 // =============================================================
-var GITHUB_TOKEN = "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";
+var GITHUB_TOKEN = "";
 var GITHUB_REPO = "zedadams/color-bibliography";
 var GITHUB_FILE = "data.json";
 
@@ -322,7 +322,7 @@ function ghStatus(msg) {
 }
 
 function loadFromGitHub(callback) {
-  if (GITHUB_TOKEN === "YOUR_TOKEN_HERE") {
+  if (!GITHUB_TOKEN) {
     loadData();
     callback();
     return;
@@ -363,11 +363,43 @@ function loadFromGitHub(callback) {
 }
 
 function saveToGitHub() {
-  if (GITHUB_TOKEN === "YOUR_TOKEN_HERE") {
-    ghStatus("Configure GitHub token first.");
+  // Show inline token dialog in the content area
+  var content = document.getElementById("content");
+  var alreadyHasToken = GITHUB_TOKEN && GITHUB_TOKEN.length > 0;
+  content.innerHTML =
+    '<div style="padding:10px; max-width:500px;">' +
+    '<b>Save to GitHub</b><br><br>' +
+    '<div>Enter your GitHub personal access token to save your bibliography data.</div>' +
+    (alreadyHasToken ? '<div style="margin-top:6px; color:#666; font-size:0.9em;">A token is already stored for this session. You can re-enter one to replace it.</div>' : '') +
+    '<div style="margin-top:12px;">GitHub token:</div>' +
+    '<input type="password" id="gh-token-input" style="width:100%; font-family:serif; font-size:inherit; margin-top:4px; padding:2px 4px;" placeholder="ghp_..." ' +
+      'onkeydown="if(event.key===\'Enter\') confirmSaveToGitHub()">' +
+    '<div style="margin-top:6px; font-size:0.85em; color:#666;">Your token is used only for this save and is not stored permanently.</div>' +
+    '<div style="margin-top:12px;">' +
+    '<button onclick="confirmSaveToGitHub()">Save</button> ' +
+    '<button onclick="showHome()">Cancel</button>' +
+    '</div>' +
+    '<div id="gh-token-status" style="margin-top:10px;"></div>' +
+    '</div>';
+  setTimeout(function() {
+    var inp = document.getElementById("gh-token-input");
+    if (inp) inp.focus();
+  }, 50);
+}
+
+function confirmSaveToGitHub() {
+  var inp = document.getElementById("gh-token-input");
+  var statusEl = document.getElementById("gh-token-status");
+  var token = inp ? inp.value.trim() : "";
+  if (!token) {
+    if (statusEl) statusEl.textContent = "Please enter a token.";
     return;
   }
-  ghStatus("Saving...");
+  // Use the entered token for this save (store in memory for the session)
+  GITHUB_TOKEN = token;
+  if (statusEl) statusEl.textContent = "Saving...";
+  if (inp) inp.disabled = true;
+
   var content = btoa(unescape(encodeURIComponent(
     JSON.stringify({ topics: topics, entries: entries, sitePassword: sitePassword, readonlyPassword: readonlyPassword, dismissedDuplicates: dismissedDuplicates }, null, 2)
   )));
@@ -390,13 +422,19 @@ function saveToGitHub() {
   .then(function(data) {
     if (data.content && data.content.sha) {
       githubSha = data.content.sha;
+      if (statusEl) statusEl.textContent = "Saved to GitHub successfully!";
       ghStatus("Saved to GitHub.");
+      setTimeout(function() { showHome(); }, 1500);
     } else {
-      ghStatus("Error: " + (data.message || "unknown"));
+      if (statusEl) statusEl.textContent = "Error: " + (data.message || "unknown error. Check your token and repo settings.");
+      if (inp) inp.disabled = false;
+      GITHUB_TOKEN = ""; // Clear bad token
     }
   })
   .catch(function(err) {
-    ghStatus("Save failed: " + err.message);
+    if (statusEl) statusEl.textContent = "Save failed: " + err.message;
+    if (inp) inp.disabled = false;
+    GITHUB_TOKEN = ""; // Clear bad token
   });
 }
 
@@ -3322,6 +3360,3 @@ function exportCompletePDF() {
 
 </body>
 </html>
-
-index.html
-Displaying index.html.
