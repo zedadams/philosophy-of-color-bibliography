@@ -1,0 +1,61 @@
+{
+  "topics": [
+    {
+      "id": "abc",
+      "name": "ABC"
+    },
+    {
+      "id": "def",
+      "name": "DEF"
+    },
+    {
+      "id": "ghi",
+      "name": "GHI"
+    },
+    {
+      "id": "topic_1771519006205_0",
+      "name": "Hello"
+    }
+  ],
+  "entries": [
+    {
+      "id": "adams2015",
+      "citation": "Adams, Z. (2015). On the genealogy of color: A case study in historicized conceptual analysis. Routledge.",
+      "shortSummary": "JKL",
+      "longSummary": "PPP QQQ RRR",
+      "url": "",
+      "dateAdded": "2026-02-19T16:36:24.748Z",
+      "dateModified": "2026-02-19T16:36:24.748Z",
+      "topics": [
+        "abc",
+        "def"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    },
+    {
+      "id": "adams_hansen2020",
+      "citation": "Adams, Z., & Hansen, N. (2020). The myth of the common-sense conception of colour. Shifting concepts: The philosophy and psychology of conceptual variability, 106-127.",
+      "shortSummary": "MNO",
+      "longSummary": "SSS TTT UUU",
+      "url": "",
+      "dateAdded": "2026-02-19T16:36:24.748Z",
+      "dateModified": "2026-02-19T16:36:24.748Z",
+      "topics": [
+        "def",
+        "ghi"
+      ],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": [],
+      "editorialNotes": ""
+    }
+  ],
+  "sitePassword": "Therainbow159!",
+  "readonlyPassword": "Elephant2026%",
+  "dismissedDuplicates": []
+}
