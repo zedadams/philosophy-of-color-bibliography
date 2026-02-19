@@ -104,6 +104,7 @@ input[type="text"] { font-family: serif; font-size: inherit; }
 <div id="sidebar-bottom">
 <button onclick="changeEditorPasswordUI()">Change editor password</button>
 <button onclick="changeReadonlyPasswordUI()">Change read-only password</button>
+<button onclick="configureGitHubTokenUI()">Set GitHub token</button>
 <button onclick="logout()">Log out</button>
 </div>
 </div>
@@ -306,9 +307,45 @@ if (cookieVal === "editor" || cookieVal === "granted") {
 // =============================================================
 // GITHUB CONFIGURATION
 // =============================================================
-var GITHUB_TOKEN = "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";
+var GITHUB_TOKEN = getCookie("zed_github_token") || "YOUR_TOKEN_HERE";
 var GITHUB_REPO = "zedadams/philosophy-of-color-bibliography";
 var GITHUB_FILE = "data.json";
+
+function configureGitHubTokenUI() {
+  var content = document.getElementById("content");
+  var current = getCookie("zed_github_token") || "";
+  var masked = current ? (current.substring(0, 4) + "••••••••••••••••" + current.slice(-4)) : "Not set";
+  content.innerHTML = '<div style="padding:10px;">' +
+    '<b>Set GitHub Token</b><br><br>' +
+    '<div>Current token: <span style="font-family:monospace;">' + masked + '</span></div><br>' +
+    '<div>Paste your new GitHub personal access token:</div>' +
+    '<input type="password" id="github-token-input" style="width:350px; font-family:monospace; font-size:inherit; margin-top:6px;" placeholder="ghp_...">' +
+    '<br><br>' +
+    '<button onclick="saveGitHubToken()">Save token</button> ' +
+    '<button onclick="clearGitHubToken()">Clear token</button> ' +
+    '<button onclick="showHome()">Cancel</button>' +
+    '<div id="token-msg" style="margin-top:10px;"></div>' +
+    '</div>';
+}
+
+function saveGitHubToken() {
+  var val = document.getElementById("github-token-input").value.trim();
+  if (!val) {
+    document.getElementById("token-msg").textContent = "Please enter a token.";
+    return;
+  }
+  setCookie("zed_github_token", val);
+  GITHUB_TOKEN = val;
+  document.getElementById("token-msg").textContent = "Token saved! You can now use Save to GitHub.";
+  setTimeout(function() { showHome(); }, 1500);
+}
+
+function clearGitHubToken() {
+  document.cookie = "zed_github_token=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;SameSite=Lax";
+  GITHUB_TOKEN = "YOUR_TOKEN_HERE";
+  document.getElementById("token-msg").textContent = "Token cleared.";
+  setTimeout(function() { showHome(); }, 1000);
+}
 
 var githubSha = null;
 
