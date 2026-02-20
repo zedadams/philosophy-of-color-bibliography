@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "id": "abc",
-      "name": "ABC"
-    },
-    {
       "id": "topic_1771569723996_2",
       "name": "Akins"
     },
@@ -49,10 +45,6 @@
       "name": "Colorimetry"
     },
     {
-      "id": "def",
-      "name": "DEF"
-    },
-    {
       "id": "topic_1771569723996_13",
       "name": "Democritus"
     },
@@ -83,10 +75,6 @@
     {
       "id": "topic_1771569723996_20",
       "name": "Genealogical Method"
-    },
-    {
-      "id": "ghi",
-      "name": "GHI"
     },
     {
       "id": "topic_1771569723996_21",
@@ -162,10 +150,7 @@
       "url": "",
       "dateAdded": "2026-02-19T20:59:16.648Z",
       "dateModified": "2026-02-19T20:59:16.648Z",
-      "topics": [
-        "abc",
-        "def"
-      ],
+      "topics": [],
       "quotations": [],
       "summaryHistory": [],
       "seeAlso": [],
@@ -180,10 +165,7 @@
       "url": "",
       "dateAdded": "2026-02-19T20:59:16.648Z",
       "dateModified": "2026-02-19T20:59:16.648Z",
-      "topics": [
-        "def",
-        "ghi"
-      ],
+      "topics": [],
       "quotations": [],
       "summaryHistory": [],
       "seeAlso": [],
