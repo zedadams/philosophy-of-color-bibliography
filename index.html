@@ -51,14 +51,14 @@ input[type="text"] { font-family: serif; font-size: inherit; }
 <br><br>
 <div>Enter password to access the read-only version of this site:</div>
 <br>
-<input type="password" id="password-readonly" style="font-family: serif; font-size: inherit;" onkeydown="if(event.key==='Enter')checkPasswordReadOnly()">
-<button onclick="checkPasswordReadOnly()">Enter</button>
+<input type="password" id="password-readonly" style="font-family: serif; font-size: inherit;" onkeydown="if(event.key==='Enter')loadLatestReadOnly()">
+<button onclick="loadLatestReadOnly()">Load Latest Changes</button>
 <div id="password-error-readonly" style="margin-top: 6px;"></div>
 <br><br>
 <div>Editor's access (enter GitHub token):</div>
 <br>
-<input type="password" id="editor-token" style="font-family: serif; font-size: inherit;" onkeydown="if(event.key==='Enter')checkPasswordEditor()" placeholder="github_pat_...">
-<button onclick="checkPasswordEditor()">Enter</button>
+<input type="password" id="editor-token" style="font-family: serif; font-size: inherit;" onkeydown="if(event.key==='Enter')loadLatestEditor()" placeholder="github_pat_...">
+<button onclick="loadLatestEditor()">Load Latest Changes</button>
 <div id="password-error-editor" style="margin-top: 6px;"></div>
 </div>
 
@@ -139,6 +139,66 @@ function getStoredPassword() {
 function getStoredReadonlyPassword() {
   if (typeof readonlyPassword !== "undefined" && readonlyPassword) return readonlyPassword;
   return DEFAULT_READONLY_PASSWORD;
+}
+
+function loadLatestReadOnly() {
+  var input = document.getElementById("password-readonly").value;
+  if (input !== getStoredReadonlyPassword()) {
+    document.getElementById("password-error-readonly").textContent = "Incorrect password.";
+    return;
+  }
+  document.getElementById("password-error-readonly").textContent = "Loading latest changes...";
+  readOnly = true;
+  var rawUrl = "https://raw.githubusercontent.com/" + GITHUB_REPO + "/main/" + GITHUB_FILE + "?t=" + Date.now();
+  fetch(rawUrl)
+  .then(function(r) { return r.json(); })
+  .then(function(parsed) {
+    topics = parsed.topics || [];
+    entries = parsed.entries || [];
+    sitePassword = parsed.sitePassword || "Therainbow159!";
+    readonlyPassword = parsed.readonlyPassword || "Elephant2026%";
+    dismissedDuplicates = parsed.dismissedDuplicates || [];
+    migrateEntries();
+    autoSave();
+    setCookie("zed_biblio_auth", "readonly");
+    enterSite();
+  })
+  .catch(function() {
+    document.getElementById("password-error-readonly").textContent = "Failed to load from GitHub. Check your connection.";
+  });
+}
+
+function loadLatestEditor() {
+  var token = document.getElementById("editor-token").value.trim();
+  if (token.length <= 10) {
+    document.getElementById("password-error-editor").textContent = "Please enter a valid GitHub token.";
+    return;
+  }
+  document.getElementById("password-error-editor").textContent = "Loading latest changes...";
+  sessionStorage.setItem("githubEditorToken", token);
+  GITHUB_TOKEN = token;
+  readOnly = false;
+  var rawUrl = "https://raw.githubusercontent.com/" + GITHUB_REPO + "/main/" + GITHUB_FILE + "?t=" + Date.now();
+  fetch(rawUrl)
+  .then(function(r) { return r.json(); })
+  .then(function(parsed) {
+    topics = parsed.topics || [];
+    entries = parsed.entries || [];
+    sitePassword = parsed.sitePassword || "Therainbow159!";
+    readonlyPassword = parsed.readonlyPassword || "Elephant2026%";
+    dismissedDuplicates = parsed.dismissedDuplicates || [];
+    migrateEntries();
+    autoSave();
+    // Fetch SHA for saving
+    fetch("https://api.github.com/repos/" + GITHUB_REPO + "/contents/" + GITHUB_FILE, {
+      headers: { "Authorization": "token " + GITHUB_TOKEN }
+    }).then(function(r) { return r.json(); }).then(function(d) { if (d && d.sha) githubSha = d.sha; }).catch(function(){});
+    setCookie("zed_biblio_auth", "editor");
+    enterSite();
+  })
+  .catch(function() {
+    document.getElementById("password-error-editor").textContent = "Failed to load from GitHub. Check your token and connection.";
+  });
 }
 
 function checkPasswordReadOnly() {
