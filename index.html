@@ -328,11 +328,8 @@ function ghStatus(msg) {
 
 function loadFromGitHub(callback) {
   ghStatus("Loading...");
-  var fetchHeaders = {};
-  if (GITHUB_TOKEN) fetchHeaders["Authorization"] = "token " + GITHUB_TOKEN;
-  fetch("https://api.github.com/repos/" + GITHUB_REPO + "/contents/" + GITHUB_FILE, {
-    headers: fetchHeaders
-  })
+  var rawUrl = "https://raw.githubusercontent.com/" + GITHUB_REPO + "/main/" + GITHUB_FILE + "?t=" + Date.now();
+  fetch(rawUrl)
   .then(function(r) {
     if (r.status === 404) {
       ghStatus("No data on GitHub yet.");
@@ -342,11 +339,8 @@ function loadFromGitHub(callback) {
     }
     return r.json();
   })
-  .then(function(data) {
-    if (!data) return;
-    githubSha = data.sha;
-    var content = atob(data.content.replace(/\n/g, ""));
-    var parsed = JSON.parse(content);
+  .then(function(parsed) {
+    if (!parsed) return;
     topics = parsed.topics || [];
     entries = parsed.entries || [];
     sitePassword = parsed.sitePassword || "Therainbow159!";
@@ -355,6 +349,12 @@ function loadFromGitHub(callback) {
     migrateEntries();
     autoSave();
     ghStatus("Loaded from GitHub.");
+    // Fetch SHA separately so we can save later
+    if (GITHUB_TOKEN) {
+      fetch("https://api.github.com/repos/" + GITHUB_REPO + "/contents/" + GITHUB_FILE, {
+        headers: { "Authorization": "token " + GITHUB_TOKEN }
+      }).then(function(r) { return r.json(); }).then(function(d) { if (d && d.sha) githubSha = d.sha; }).catch(function(){});
+    }
     callback();
   })
   .catch(function(err) {
