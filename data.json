@@ -1,18 +1,6 @@
 {
   "topics": [
     {
-      "id": "topic_1771569723996_9",
-      "name": "Color Categorization"
-    },
-    {
-      "id": "topic_1771569723996_10",
-      "name": "Color Constancy"
-    },
-    {
-      "id": "topic_1771569723996_12",
-      "name": "Color Science"
-    },
-    {
       "id": "topic_1771569723996_11",
       "name": "Colorimetry"
     },
