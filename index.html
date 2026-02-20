@@ -58,6 +58,7 @@ input[type="text"] { font-family: serif; font-size: inherit; }
 <div>Editor's access (enter GitHub token):</div>
 <br>
 <input type="password" id="editor-token" style="font-family: serif; font-size: inherit;" onkeydown="if(event.key==='Enter')loadLatestEditor()" placeholder="github_pat_...">
+<script>var _savedToken = localStorage.getItem("githubEditorToken"); if (_savedToken) document.currentScript.previousElementSibling.value = _savedToken;<\/script>
 <button onclick="loadLatestEditor()">Load Latest Changes</button>
 <div id="password-error-editor" style="margin-top: 6px;"></div>
 </div>
@@ -176,6 +177,7 @@ function loadLatestEditor() {
   }
   document.getElementById("password-error-editor").textContent = "Loading latest changes...";
   sessionStorage.setItem("githubEditorToken", token);
+  localStorage.setItem("githubEditorToken", token);
   GITHUB_TOKEN = token;
   readOnly = false;
   var rawUrl = "https://raw.githubusercontent.com/" + GITHUB_REPO + "/main/" + GITHUB_FILE + "?t=" + Date.now();
@@ -260,6 +262,7 @@ function logOut() {
   }
   document.cookie = "zed_biblio_auth=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;SameSite=Lax";
   sessionStorage.removeItem("githubEditorToken");
+  localStorage.removeItem("githubEditorToken");
   GITHUB_TOKEN = "";
   document.getElementById("site").style.display = "none";
   document.getElementById("password-page").style.display = "block";
