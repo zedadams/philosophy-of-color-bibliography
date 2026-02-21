@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "id": "topic_1771652798074_0",
-      "name": "Hey Zed! Try deleting this if you see it."
-    },
-    {
       "id": "topic_1771569723996_23",
       "name": "Holism"
     },
@@ -39,10 +35,6 @@
     {
       "id": "topic_1771569723996_34",
       "name": "Shadows"
-    },
-    {
-      "id": "topic_1771569723996_35",
-      "name": "Unique/Binary Hues"
     }
   ],
   "entries": [
@@ -75,6 +67,211 @@
       "seeAlso": [],
       "keywords": [],
       "editorialNotes": ""
+    },
+    {
+      "id": "entry_1771671901688_0",
+      "citation": "Carman, T. (2019). Merleau-Ponty. Routledge.",
+      "shortSummary": "def",
+      "longSummary": "mno",
+      "url": "abc",
+      "dateAdded": "2026-02-21T11:05:01.688Z",
+      "dateModified": "2026-02-21T11:06:31.555Z",
+      "topics": [],
+      "quotations": [
+        {
+          "text": "To be",
+          "page": "100"
+        }
+      ],
+      "summaryHistory": [],
+      "seeAlso": [
+        "entry_1771671901688_2",
+        "entry_1771671901688_3"
+      ],
+      "keywords": [],
+      "editorialNotes": "xyz"
+    },
+    {
+      "id": "entry_1771671901688_1",
+      "citation": "Johnson, G. A. (1994). The colors of fire: Depth and desire in Merleau-Ponty's Eye and Mind. Journal of the British Society for Phenomenology, 25(1), 53–63.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-21T11:05:01.688Z",
+      "dateModified": "2026-02-21T11:05:01.688Z",
+      "topics": [],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": []
+    },
+    {
+      "id": "entry_1771671901688_2",
+      "citation": "Merleau-Ponty, M. (1964a). Eye and mind. (C. Dallery, Trans.). In J. Edie (Ed.), The primacy of perception (pp. 159–190). Evanston, IL: Northwestern University Press.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-21T11:05:01.688Z",
+      "dateModified": "2026-02-21T11:05:01.688Z",
+      "topics": [],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": []
+    },
+    {
+      "id": "entry_1771671901688_3",
+      "citation": "Merleau-Ponty, M. (1964b). Cézanne’s doubt. In Sense and non-sense (pp. 9–25). Northwestern University Press.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-21T11:05:01.688Z",
+      "dateModified": "2026-02-21T11:05:01.688Z",
+      "topics": [],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": []
+    },
+    {
+      "id": "entry_1771671901688_5",
+      "citation": "Shiff, R. (1978). Seeing Cézanne. Critical Inquiry, 4(4), 769–808.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-21T11:05:01.688Z",
+      "dateModified": "2026-02-21T11:05:01.688Z",
+      "topics": [],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": []
+    },
+    {
+      "id": "entry_1771671901688_4",
+      "citation": "Shiff, R. A. (1973). Impressionist criticism, impressionist color, and Cézanne. Yale University Press.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-21T11:05:01.688Z",
+      "dateModified": "2026-02-21T11:05:01.688Z",
+      "topics": [],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": []
+    },
+    {
+      "id": "entry_1771671901688_6",
+      "citation": "Smith, P. (2013). Cézanne's “primitive” perspective, or the “view from everywhere.” The Art Bulletin, 95(1), 102–119.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-21T11:05:01.688Z",
+      "dateModified": "2026-02-21T11:05:01.688Z",
+      "topics": [],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": []
+    },
+    {
+      "id": "entry_1771671901688_7",
+      "citation": "Smith, P. (2014). Cézanne’s colour lab: Not-so-still. In B. Leca (Ed.), The world is an apple: The still lifes of Paul Cézanne (pp. 92–144). Hamilton, Ontario; London, UK: Art Gallery of Hamilton in association with D. Giles Limited.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-21T11:05:01.688Z",
+      "dateModified": "2026-02-21T11:05:01.688Z",
+      "topics": [],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": []
+    },
+    {
+      "id": "entry_1771671901688_8",
+      "citation": "Smith, P. (2020a). Vermilion: matière and what matters in Cézanne’s paintings. Word & Image, 36(1), 64-79.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-21T11:05:01.688Z",
+      "dateModified": "2026-02-21T11:05:01.688Z",
+      "topics": [],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": []
+    },
+    {
+      "id": "entry_1771671901688_9",
+      "citation": "Smith, P. (2020b). Vermilion, or why Cézanne took the shine off things. Word & Image, 36(1), 64-79.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-21T11:05:01.688Z",
+      "dateModified": "2026-02-21T11:05:01.688Z",
+      "topics": [],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": []
+    },
+    {
+      "id": "entry_1771671901688_10",
+      "citation": "Smith, P. (2021). Painting, science, and the perception of coloured shadows: ‘The most beautiful blue’. Routledge.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-21T11:05:01.688Z",
+      "dateModified": "2026-02-21T11:05:01.688Z",
+      "topics": [],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": []
+    },
+    {
+      "id": "entry_1771671901688_11",
+      "citation": "Smith, P. (2023a). Looking slowly with Cézanne. The Burlington Magazine, 165, 422-435.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-21T11:05:01.688Z",
+      "dateModified": "2026-02-21T11:05:01.688Z",
+      "topics": [],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": []
+    },
+    {
+      "id": "entry_1771671901688_12",
+      "citation": "Tanaka, H. (2001). Cézanne and \"Japonisme.\" Artibus et Historiae, 22(44), 201–220.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-21T11:05:01.688Z",
+      "dateModified": "2026-02-21T11:05:01.688Z",
+      "topics": [],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": []
+    },
+    {
+      "id": "entry_1771671901688_13",
+      "citation": "Wiskus, J. (2016). Cohesion and expression: Merleau-Ponty on Cézanne. In D. H. Davis & W. S. Hamrick (Eds.), Merleau-Ponty and the art of perception (pp. 67–84). State University of New York Press.",
+      "shortSummary": "",
+      "longSummary": "",
+      "url": "",
+      "dateAdded": "2026-02-21T11:05:01.688Z",
+      "dateModified": "2026-02-21T11:05:01.688Z",
+      "topics": [],
+      "quotations": [],
+      "summaryHistory": [],
+      "seeAlso": [],
+      "keywords": []
     }
   ],
   "sitePassword": "Therainbow159!",
