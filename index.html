@@ -1926,13 +1926,11 @@ function editFullEntry(entryId) {
 
   html += '<label><b>Longer summary:</b></label>';
   html += '<div style="margin-top:4px; margin-bottom:2px;">' +
-    '<button type="button" onclick="document.execCommand('bold')" style="font-weight:bold; margin-right:4px;">B</button>' +
-    '<button type="button" onclick="document.execCommand('italic')" style="font-style:italic; margin-right:4px;">I</button>' +
-    '<button type="button" onclick="document.execCommand('underline')" style="text-decoration:underline; margin-right:4px;">U</button>' +
-    '</div>' +
-    '<div id="edit-full-long" contenteditable="true" style="width:100%; min-height:160px; font-family:serif; font-size:inherit; border:1px solid #ccc; padding:6px; box-sizing:border-box; white-space:pre-wrap; overflow-y:auto;">' +
-    (entry.longSummary || '') +
+    '<button type="button" onclick="document.execCommand(&quot;bold&quot;)" style="font-weight:bold; margin-right:4px; font-family:serif; font-size:inherit;">B</button>' +
+    '<button type="button" onclick="document.execCommand(&quot;italic&quot;)" style="font-style:italic; margin-right:4px; font-family:serif; font-size:inherit;">I</button>' +
+    '<button type="button" onclick="document.execCommand(&quot;underline&quot;)" style="text-decoration:underline; font-family:serif; font-size:inherit;">U</button>' +
     '</div>';
+  html += '<div id="edit-full-long" contenteditable="true" style="width:100%; min-height:160px; font-family:serif; font-size:inherit; border:1px solid #ccc; padding:6px; box-sizing:border-box; overflow-y:auto;">' + (entry.longSummary || '') + '</div>';
 
   html += '<label><b>Editorial Notes:</b></label>';
   html += '<textarea id="edit-full-notes" rows="6">' + esc(entry.editorialNotes || '') + '</textarea>';
