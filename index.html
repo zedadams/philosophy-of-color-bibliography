@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zed's Annotated Bibliography on Color</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: serif; }
@@ -37,7 +35,7 @@ input[type="text"] { font-family: serif; font-size: inherit; }
 .entry-url a { color: #0066cc !important; }
 .date-badge { color: #888; font-size: 0.85em; margin-left: 10px; }
 @media print {
-  #sidebar, #password-page, button, .search-bar, .sort-bar, .edit-section, #sidebar-bottom, #sidebar-logout, #sidebar-editor-controls, #sidebar-edit-area, #sidebar-remove-area, #sync-status { display: none !important; }
+  #sidebar, #password-page, button, .search-bar, .sort-bar, .edit-section, #sidebar-bottom, #sidebar-logout, #sidebar-editor-controls, #sidebar-edit-area, #sidebar-remove-area { display: none !important; }
   #main { display: block !important; }
   #content { padding: 0 !important; overflow: visible !important; height: auto !important; }
   #header { border-bottom: 2px solid #000; margin-bottom: 12px; }
@@ -53,14 +51,14 @@ input[type="text"] { font-family: serif; font-size: inherit; }
 <br><br>
 <div>Enter password to access the read-only version of this site:</div>
 <br>
-<input type="password" id="password-readonly" style="font-family: serif; font-size: inherit;" onkeydown="if(event.key==='Enter')checkPasswordReadOnly()">
-<button onclick="checkPasswordReadOnly()">Enter</button>
+<input type="password" id="password-readonly" style="font-family: serif; font-size: inherit;" onkeydown="if(event.key==='Enter')loadLatestReadOnly()">
+<button onclick="loadLatestReadOnly()">Load Latest Changes</button>
 <div id="password-error-readonly" style="margin-top: 6px;"></div>
 <br><br>
-<div>Editor's access:</div>
+<div>Editor's access (enter GitHub token):</div>
 <br>
-<input type="password" id="password-editor" style="font-family: serif; font-size: inherit;" onkeydown="if(event.key==='Enter')checkPasswordEditor()">
-<button onclick="checkPasswordEditor()">Enter</button>
+<input type="password" id="editor-token" style="font-family: serif; font-size: inherit;" onkeydown="if(event.key==='Enter')loadLatestEditor()" placeholder="github_pat_...">
+<button onclick="loadLatestEditor()">Load Latest Changes</button>
 <div id="password-error-editor" style="margin-top: 6px;"></div>
 </div>
 
@@ -73,6 +71,7 @@ input[type="text"] { font-family: serif; font-size: inherit; }
 <a onclick="showHome()">All Entries</a>
 <a onclick="showRecentlyAdded()" style="font-size:0.9em;">Recently Added</a>
 <a onclick="showUncategorized()" style="font-size:0.9em;">Uncategorized</a>
+<a onclick="showStatistics()" style="font-size:0.9em;">Statistics</a>
 <br>
 <div style="margin-bottom:4px;"><b>Topics</b></div>
 <div id="topic-links"></div>
@@ -86,12 +85,18 @@ input[type="text"] { font-family: serif; font-size: inherit; }
 <div id="sidebar-editor-controls">
 <br>
 <button onclick="undo()">Undo</button>
-<div id="sync-status" style="margin-top: 6px; font-size: 0.85em; color: #888;"></div>
+<br>
+<button onclick="saveToGitHub()">Save to GitHub</button>
+<div id="github-status" style="margin-top: 4px;"></div>
+<br>
+<button onclick="exportData()">Save to file</button>
+<button onclick="document.getElementById('import-file').click()">Load from file</button>
+<input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(event)">
 </div>
 <br>
-<span id="editor-export-btns"><button onclick="exportPDF()">Export all summaries</button>
+<span id="editor-export-btns"><button onclick="exportPDF()">Export summaries as PDF</button>
 <button onclick="exportQuotationsPDF()">Export key quotations</button>
-<button onclick="exportCompletePDF()">Export everything</button></span>
+<button onclick="exportCompletePDF()">Export complete PDF</button></span>
 <span id="import-bibtex-btn"><button onclick="document.getElementById('import-bibtex-file').click()">Import from BibTeX</button>
 <input type="file" id="import-bibtex-file" accept=".bib,.bibtex,.txt" style="display:none" onchange="importBibTeX(event)"></span>
 <button onclick="exportBibTeX()">Export as BibTeX</button>
@@ -136,29 +141,67 @@ function getStoredReadonlyPassword() {
   return DEFAULT_READONLY_PASSWORD;
 }
 
-function checkPasswordReadOnly() {
-  loadData();
+function loadLatestReadOnly() {
   var input = document.getElementById("password-readonly").value;
-  if (input === getStoredReadonlyPassword()) {
-    readOnly = true;
+  if (input !== getStoredReadonlyPassword()) {
+    document.getElementById("password-error-readonly").textContent = "Incorrect password.";
+    return;
+  }
+  document.getElementById("password-error-readonly").textContent = "Loading latest changes...";
+  readOnly = true;
+  var rawUrl = "https://raw.githubusercontent.com/" + GITHUB_REPO + "/main/" + GITHUB_FILE + "?t=" + Date.now();
+  fetch(rawUrl)
+  .then(function(r) { return r.json(); })
+  .then(function(parsed) {
+    topics = parsed.topics || [];
+    entries = parsed.entries || [];
+    sitePassword = parsed.sitePassword || "Therainbow159!";
+    readonlyPassword = parsed.readonlyPassword || "Elephant2026%";
+    dismissedDuplicates = parsed.dismissedDuplicates || [];
+    migrateEntries();
+    autoSave();
     setCookie("zed_biblio_auth", "readonly");
     enterSite();
-  } else {
-    document.getElementById("password-error-readonly").textContent = "Incorrect password.";
-  }
+  })
+  .catch(function() {
+    document.getElementById("password-error-readonly").textContent = "Failed to load from GitHub. Check your connection.";
+  });
 }
 
-function checkPasswordEditor() {
-  loadData();
-  var input = document.getElementById("password-editor").value;
-  if (input === getStoredPassword()) {
-    readOnly = false;
+function loadLatestEditor() {
+  var token = document.getElementById("editor-token").value.trim();
+  if (token.length <= 10) {
+    document.getElementById("password-error-editor").textContent = "Please enter a valid GitHub token.";
+    return;
+  }
+  document.getElementById("password-error-editor").textContent = "Loading latest changes...";
+  sessionStorage.setItem("githubEditorToken", token);
+  GITHUB_TOKEN = token;
+  readOnly = false;
+  var rawUrl = "https://raw.githubusercontent.com/" + GITHUB_REPO + "/main/" + GITHUB_FILE + "?t=" + Date.now();
+  fetch(rawUrl)
+  .then(function(r) { return r.json(); })
+  .then(function(parsed) {
+    topics = parsed.topics || [];
+    entries = parsed.entries || [];
+    sitePassword = parsed.sitePassword || "Therainbow159!";
+    readonlyPassword = parsed.readonlyPassword || "Elephant2026%";
+    dismissedDuplicates = parsed.dismissedDuplicates || [];
+    migrateEntries();
+    autoSave();
+    // Fetch SHA for saving
+    fetch("https://api.github.com/repos/" + GITHUB_REPO + "/contents/" + GITHUB_FILE, {
+      headers: { "Authorization": "token " + GITHUB_TOKEN }
+    }).then(function(r) { return r.json(); }).then(function(d) { if (d && d.sha) githubSha = d.sha; }).catch(function(){});
     setCookie("zed_biblio_auth", "editor");
     enterSite();
-  } else {
-    document.getElementById("password-error-editor").textContent = "Incorrect password.";
-  }
+  })
+  .catch(function() {
+    document.getElementById("password-error-editor").textContent = "Failed to load from GitHub. Check your token and connection.";
+  });
 }
+
+
 
 var pwFormOpen = false;
 
@@ -212,11 +255,16 @@ function cancelPasswordChange() {
 }
 
 function logOut() {
+  if (unsavedChanges && !readOnly) {
+    if (!confirm("Warning: you have unsaved changes. Are you sure you want to log out without saving to GitHub?")) return;
+  }
   document.cookie = "zed_biblio_auth=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;SameSite=Lax";
+  sessionStorage.removeItem("githubEditorToken");
+  GITHUB_TOKEN = "";
   document.getElementById("site").style.display = "none";
   document.getElementById("password-page").style.display = "block";
   document.getElementById("password-readonly").value = "";
-  document.getElementById("password-editor").value = "";
+  document.getElementById("editor-token").value = "";
   document.getElementById("password-error-readonly").textContent = "";
   document.getElementById("password-error-editor").textContent = "";
   readOnly = false;
@@ -242,7 +290,7 @@ function saveEditorPassword() {
   }
   sitePassword = newPw;
   autoSave();
-  msg.textContent = "Editor password changed successfully.";
+  msg.textContent = "Editor password changed. Save to GitHub to sync across devices.";
   setTimeout(function() {
     cancelPasswordChange();
   }, 2000);
@@ -268,7 +316,7 @@ function saveReadonlyPassword() {
   }
   readonlyPassword = newPw;
   autoSave();
-  msg.textContent = "Read-only password changed successfully.";
+  msg.textContent = "Read-only password changed. Save to GitHub to sync across devices.";
   setTimeout(function() {
     cancelPasswordChange();
   }, 2000);
@@ -277,12 +325,7 @@ function saveReadonlyPassword() {
 function enterSite() {
   document.getElementById("password-page").style.display = "none";
   document.getElementById("site").style.display = "block";
-  // Render immediately with cached localStorage data
-  applyAccessMode();
-  renderSidebar();
-  showHome();
-  // Then refresh from Firebase in the background
-  loadFromFirebase(function() {
+  loadFromGitHub(function() {
     applyAccessMode();
     renderSidebar();
     showHome();
@@ -300,53 +343,15 @@ function applyAccessMode() {
 }
 
 // =============================================================
-// FIREBASE REALTIME DATABASE (shared persistent storage)
+// GITHUB CONFIGURATION
 // =============================================================
-// Data is stored in Firebase Realtime Database so all users
-// can see and contribute to the bibliography in real time.
-// Falls back to localStorage if Firebase is not configured.
-// =============================================================
-
-// --- Firebase Config ---
-// INSTRUCTIONS: Replace these values with your project's config
-// from Firebase Console > Project Settings > General > Your apps.
-// The databaseURL is required -- find it in Realtime Database > Data tab.
-var firebaseConfig = {
-  apiKey: "AIzaSyD-kCSTGv6ImK6GlferViL6dfgxI7mditU",
-  authDomain: "color-bibliography.firebaseapp.com",
-  databaseURL: "https://color-bibliography-default-rtdb.firebaseio.com",
-  projectId: "color-bibliography",
-  storageBucket: "color-bibliography.firebasestorage.app",
-  messagingSenderId: "81786835895",
-  appId: "1:81786835895:web:f490841c369c76e965ce32"
-};
-
-// Initialize Firebase (only if SDK loaded and config is filled in)
-var firebaseReady = false;
-var dbRef = null;
-
-try {
-  if (typeof firebase !== "undefined" && firebaseConfig.apiKey.indexOf("YOUR_") === -1) {
-    firebase.initializeApp(firebaseConfig);
-    dbRef = firebase.database().ref("biblioData");
-    firebaseReady = true;
-    console.log("Firebase Realtime Database initialized.");
-  } else {
-    console.log("Firebase not configured. Using localStorage only.");
-  }
-} catch (err) {
-  console.error("Firebase init error:", err);
-  firebaseReady = false;
-}
-
-var storageReady = firebaseReady;
-
-// Load data from localStorage first (for immediate render), then enterSite
-// will also trigger Firebase load in the background
-loadData();
+var GITHUB_TOKEN = sessionStorage.getItem("githubEditorToken") || "";
+var GITHUB_REPO = "zedadams/philosophy-of-color-bibliography";
+var GITHUB_FILE = "data.json";
 
 var cookieVal = getCookie("zed_biblio_auth");
 if (cookieVal === "editor" || cookieVal === "granted") {
+  GITHUB_TOKEN = sessionStorage.getItem("githubEditorToken") || "";
   readOnly = false;
   enterSite();
 } else if (cookieVal === "readonly") {
@@ -354,173 +359,82 @@ if (cookieVal === "editor" || cookieVal === "granted") {
   enterSite();
 }
 
-function syncStatus(msg) {
-  var el = document.getElementById("sync-status");
-  if (el) el.textContent = msg;
-}
+var githubSha = null;
+var unsavedChanges = false;
 
-var STORAGE_KEY = "biblio-data"; // kept for localStorage key
-
-async function loadFromSharedStorage() {
-  if (!firebaseReady) return false;
-  try {
-    var snapshot = await dbRef.once("value");
-    var data = snapshot.val();
-    if (data) {
-      topics = data.topics || [];
-      entries = data.entries || [];
-      sitePassword = data.sitePassword || "Therainbow159!";
-      readonlyPassword = data.readonlyPassword || "Elephant2026%";
-      dismissedDuplicates = data.dismissedDuplicates || [];
-      migrateEntries();
-      // Update localStorage cache
-      localStorage.setItem("zed_biblio_data", JSON.stringify({
-        topics: topics, entries: entries, sitePassword: sitePassword,
-        readonlyPassword: readonlyPassword, dismissedDuplicates: dismissedDuplicates
-      }));
-      return true;
-    }
-  } catch (err) {
-    console.log("Firebase load error, using defaults.", err);
+window.addEventListener("beforeunload", function(e) {
+  if (unsavedChanges && !readOnly) {
+    e.preventDefault();
+    e.returnValue = "";
   }
-  return false;
+});
+
+function ghStatus(msg) {
+  document.getElementById("github-status").textContent = msg;
 }
 
-async function saveToSharedStorage() {
-  if (!firebaseReady) return;
-  if (_applyingRemoteUpdate) return;
-  syncStatus("Saving...");
-  try {
-    var data = {
-      topics: topics,
-      entries: entries,
-      sitePassword: sitePassword,
-      readonlyPassword: readonlyPassword,
-      dismissedDuplicates: dismissedDuplicates || []
-    };
-    await dbRef.set(data);
-    syncStatus("All changes saved.");
-    setTimeout(function() { syncStatus(""); }, 3000);
-  } catch (err) {
-    console.error("Firebase save error:", err);
-    syncStatus("Save failed: " + err.message);
-  }
-}
-
-// Debounced auto-save (waits 1.5 seconds after last change)
-var _storageSaveTimer = null;
-function debouncedSharedSave() {
-  if (!firebaseReady) return;
-  if (_storageSaveTimer) clearTimeout(_storageSaveTimer);
-  syncStatus("Unsaved changes...");
-  _storageSaveTimer = setTimeout(function() {
-    _storageSaveTimer = null;
-    saveToSharedStorage();
-  }, 1500);
-}
-
-// --- REAL-TIME SYNC ---
-
-var _applyingRemoteUpdate = false;
-var _initialLoadDone = false;
-var _pendingRemoteData = null;
-
-function setupRealtimeListener() {
-  if (!firebaseReady) return;
-
-  dbRef.on("value", function(snapshot) {
-    var data = snapshot.val();
-    if (!data || !data.entries) return;
-
-    // Skip the first callback (fires immediately with current data;
-    // we already loaded via loadFromSharedStorage / once()).
-    if (!_initialLoadDone) {
-      _initialLoadDone = true;
-      return;
-    }
-
-    // Check if remote data is actually different from local data
-    var remoteJSON = JSON.stringify({
-      topics: data.topics,
-      entries: data.entries
-    });
-    var localJSON = JSON.stringify({
-      topics: topics,
-      entries: entries
-    });
-    if (remoteJSON === localJSON) return;
-
-    // If user is actively editing, defer the re-render.
-    // Check for focused inputs AND open edit forms (checkboxes don't
-    // hold focus between clicks, so we also check for edit-area content).
-    var contentArea = document.getElementById("content");
-    var activeInput = contentArea ? contentArea.querySelector("textarea:focus, input:focus") : null;
-    var editArea = document.getElementById("edit-area");
-    var topicEditArea = document.getElementById("topic-edit-area");
-    var sidebarRemoveArea = document.getElementById("sidebar-remove-area");
-    var hasOpenForm = (editArea && editArea.innerHTML.trim() !== "") ||
-                      (topicEditArea && topicEditArea.innerHTML.trim() !== "") ||
-                      (sidebarRemoveArea && sidebarRemoveArea.innerHTML.trim() !== "");
-    if (activeInput || hasOpenForm) {
-      syncStatus("New data available. Will refresh when you finish editing.");
-      _pendingRemoteData = data;
-      return;
-    }
-
-    // Apply remote data
-    _applyingRemoteUpdate = true;
-    try {
-      topics = data.topics || [];
-      entries = data.entries || [];
-      sitePassword = data.sitePassword || "Therainbow159!";
-      readonlyPassword = data.readonlyPassword || "Elephant2026%";
-      dismissedDuplicates = data.dismissedDuplicates || [];
-      migrateEntries();
-
-      // Update localStorage cache
-      localStorage.setItem("zed_biblio_data", JSON.stringify(data));
-
-      // Re-render the UI
-      renderSidebar();
-      showHome();
-
-      syncStatus("Updated from another user.");
-      setTimeout(function() { syncStatus(""); }, 3000);
-    } catch (err) {
-      console.error("Error applying remote update:", err);
-    } finally {
-      _applyingRemoteUpdate = false;
-    }
-  });
-}
-
-function loadFromFirebase(callback) {
-  if (!firebaseReady) {
-    loadData();
-    callback();
-    return;
-  }
-  syncStatus("Loading...");
-  loadFromSharedStorage().then(function(loaded) {
-    if (!loaded) {
-      // Firebase is empty -- try localStorage as a migration path
+function loadFromGitHub(callback) {
+  ghStatus("Loading...");
+  var rawUrl = "https://raw.githubusercontent.com/" + GITHUB_REPO + "/main/" + GITHUB_FILE + "?t=" + Date.now();
+  fetch(rawUrl)
+  .then(function(r) {
+    if (r.status === 404) {
+      ghStatus("No data on GitHub yet.");
       loadData();
-      // If we got data from localStorage, push it to Firebase
-      if (entries && entries.length > 0) {
-        syncStatus("Migrating data to Firebase...");
-        saveToSharedStorage();
-      }
+      callback();
+      return null;
     }
-    syncStatus("");
-    // Start real-time listener AFTER initial load
-    setupRealtimeListener();
+    return r.json();
+  })
+  .then(function(parsed) {
+    if (!parsed) return;
+    topics = parsed.topics || [];
+    entries = parsed.entries || [];
+    sitePassword = parsed.sitePassword || "Therainbow159!";
+    readonlyPassword = parsed.readonlyPassword || "Elephant2026%";
+    dismissedDuplicates = parsed.dismissedDuplicates || [];
+    migrateEntries();
+    autoSave();
+    unsavedChanges = false;
+    ghStatus("Loaded from GitHub.");
+    // Fetch SHA separately so we can save later
+    if (GITHUB_TOKEN) {
+      fetch("https://api.github.com/repos/" + GITHUB_REPO + "/contents/" + GITHUB_FILE, {
+        headers: { "Authorization": "token " + GITHUB_TOKEN }
+      }).then(function(r) { return r.json(); }).then(function(d) { if (d && d.sha) githubSha = d.sha; }).catch(function(){});
+    }
     callback();
-  }).catch(function(err) {
-    console.error("Firebase load failed:", err);
+  })
+  .catch(function(err) {
+    ghStatus("GitHub load failed, using local data.");
     loadData();
-    syncStatus("");
     callback();
   });
+}
+
+function saveToGitHub() {
+  ghStatus("Saving...");
+  var content = btoa(unescape(encodeURIComponent(
+    JSON.stringify({ topics: topics, entries: entries, sitePassword: sitePassword, readonlyPassword: readonlyPassword, dismissedDuplicates: dismissedDuplicates }, null, 2)
+  )));
+  var body = { message: "Update bibliography", content: content };
+  if (githubSha) body.sha = githubSha;
+  fetch("https://api.github.com/repos/" + GITHUB_REPO + "/contents/" + GITHUB_FILE, {
+    method: "PUT",
+    headers: { "Authorization": "token " + GITHUB_TOKEN, "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.content && data.content.sha) {
+      githubSha = data.content.sha;
+      unsavedChanges = false;
+      ghStatus("Saved to GitHub.");
+    } else {
+      ghStatus("Error: " + (data.message || "unknown"));
+    }
+  })
+  .catch(function(err) { ghStatus("Save failed: " + err.message); });
 }
 
 // --- DATA ---
@@ -539,7 +453,6 @@ function migrateEntries() {
     if (typeof entries[i].seeAlso === "undefined") entries[i].seeAlso = [];
     if (typeof entries[i].keywords === "undefined") entries[i].keywords = [];
     if (typeof entries[i].editorialNotes === "undefined") entries[i].editorialNotes = "";
-    if (!Array.isArray(entries[i].topics)) entries[i].topics = [];
   }
 }
 
@@ -596,17 +509,8 @@ function loadData() {
 }
 
 function autoSave() {
-  // Always save to localStorage (fast, synchronous, offline-available)
+  unsavedChanges = true;
   localStorage.setItem("zed_biblio_data", JSON.stringify({ topics: topics, entries: entries, sitePassword: sitePassword, readonlyPassword: readonlyPassword, dismissedDuplicates: dismissedDuplicates }));
-  // Debounced save to Firebase (skip if we're applying a remote update to avoid loops)
-  if (!_applyingRemoteUpdate) {
-    debouncedSharedSave();
-  }
-  // If there was pending remote data deferred while editing, clear it
-  // (our local save takes priority -- last writer wins)
-  if (_pendingRemoteData) {
-    _pendingRemoteData = null;
-  }
 }
 
 // --- UNDO ---
@@ -691,8 +595,7 @@ function sortTopics() {
 function countEntriesForTopic(topicId) {
   var count = 0;
   for (var i = 0; i < entries.length; i++) {
-    var t = entries[i].topics || [];
-    if (t.indexOf(topicId) !== -1) count++;
+    if (entries[i].topics.indexOf(topicId) !== -1) count++;
   }
   return count;
 }
@@ -700,8 +603,7 @@ function countEntriesForTopic(topicId) {
 function countUncategorized() {
   var count = 0;
   for (var i = 0; i < entries.length; i++) {
-    var t = entries[i].topics || [];
-    if (t.length === 0) count++;
+    if (entries[i].topics.length === 0) count++;
   }
   return count;
 }
@@ -746,7 +648,7 @@ var newTopicCount = 0;
 function addTopicField() {
   var div = document.getElementById("new-topic-fields");
   var html = '<div style="margin-top:4px"><input type="text" id="tnew_' + newTopicCount + '" placeholder="New topic" style="width:120px;"></div>';
-  div.insertAdjacentHTML('beforeend', html);
+  div.innerHTML += html;
   newTopicCount++;
 }
 
@@ -795,9 +697,8 @@ function saveRemoveTopics() {
       var topicId = topics[i].id;
       topics.splice(i, 1);
       for (var j = 0; j < entries.length; j++) {
-        var et = entries[j].topics || [];
-        var idx = et.indexOf(topicId);
-        if (idx !== -1) et.splice(idx, 1);
+        var idx = entries[j].topics.indexOf(topicId);
+        if (idx !== -1) entries[j].topics.splice(idx, 1);
       }
     }
   }
@@ -812,47 +713,29 @@ function cancelRemoveTopics() {
 }
 
 function bulkAddTopicsUI() {
-  var area = document.getElementById("sidebar-remove-area");
-  if (area.innerHTML.trim() !== "") { area.innerHTML = ""; return; }
   var html = '<div style="margin-top:6px">';
   html += '<label>Add multiple topics, one per line:</label>';
-  html += '<textarea id="bulk-topics-input" rows="6" style="width:180px;" placeholder="Topic one&#10;Topic two&#10;Topic three"></textarea>';
-  html += '<br><button id="bulk-topics-save-btn">Add All</button> ';
-  html += '<button id="bulk-topics-cancel-btn">Cancel</button>';
+  html += '<textarea id="bulk-topics-input" rows="6" style="width:180px;" placeholder="Topic one\nTopic two\nTopic three"></textarea>';
+  html += '<br><button onclick="saveBulkTopics()">Add All</button> ';
+  html += '<button onclick="cancelBulkTopics()">Cancel</button>';
   html += '</div>';
-  area.innerHTML = html;
-  document.getElementById("bulk-topics-save-btn").addEventListener("click", function() { saveBulkTopics(); });
-  document.getElementById("bulk-topics-cancel-btn").addEventListener("click", function() { cancelBulkTopics(); });
-  area.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  var ta = document.getElementById("bulk-topics-input");
-  if (ta) ta.focus();
+  document.getElementById("sidebar-remove-area").innerHTML = html;
 }
 
 function saveBulkTopics() {
-  try {
-    // Safety: ensure data arrays are loaded
-    if (!Array.isArray(topics) || !Array.isArray(entries)) {
-      loadData();
-    }
-    if (!Array.isArray(topics)) topics = [];
-    if (!Array.isArray(entries)) entries = [];
-    var text = document.getElementById("bulk-topics-input").value;
-    var lines = text.split("\n");
-    var count = 0;
-    snapshot();
-    for (var i = 0; i < lines.length; i++) {
-      var name = lines[i].trim();
-      if (name === "") continue;
-      topics.push({ id: "topic_" + Date.now() + "_" + i, name: name });
-      count++;
-    }
-    if (count > 0) {
-      autoSave();
-      renderSidebar();
-    }
-  } catch (err) {
-    console.error("Error in saveBulkTopics:", err);
-    alert("Error adding topics: " + err.message);
+  var text = document.getElementById("bulk-topics-input").value;
+  var lines = text.split("\n");
+  var count = 0;
+  snapshot();
+  for (var i = 0; i < lines.length; i++) {
+    var name = lines[i].trim();
+    if (name === "") continue;
+    topics.push({ id: "topic_" + Date.now() + "_" + i, name: name });
+    count++;
+  }
+  if (count > 0) {
+    autoSave();
+    renderSidebar();
   }
   cancelBulkTopics();
 }
@@ -871,14 +754,6 @@ function esc(str) {
 
 function escAttr(str) {
   return (str || "").replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
-// Escape a string for safe embedding inside a JS string literal within an HTML onclick attribute.
-// Step 1: JS-level escaping (backslashes and single quotes).
-// Step 2: HTML-attribute-level escaping (&, ", <, >).
-function escOnclick(str) {
-  var s = (str || "").replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-  return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 // Feature 4 helper: extract year from "(YYYY)" in citation
@@ -1190,13 +1065,13 @@ function showHome() {
     sorted.sort(function(a, b) { return a.citation.localeCompare(b.citation); });
   }
 
-  // Build letter headings and entry elements
+  // Build letter headings (only in alpha sort) and entry elements
   var letterHeadings = {};
   var lastLetter = "";
   var entryElements = [];
   for (var i = 0; i < sorted.length; i++) {
     var firstChar = sorted[i].citation.replace(/[^a-zA-Z]/g, "").charAt(0).toUpperCase();
-    if (firstChar !== lastLetter) {
+    if (currentSort === "alpha" && firstChar !== lastLetter) {
       var heading = document.createElement("div");
       heading.className = "letter-heading";
       heading.style.fontWeight = "bold";
@@ -1233,25 +1108,27 @@ function showHome() {
     entryElements.push(div);
   }
 
-  // A-Z jump bar (always shown)
-  var jumpBar = document.createElement("div");
-  jumpBar.style.marginBottom = "8px";
-  for (var c = 65; c <= 90; c++) {
-    var letter = String.fromCharCode(c);
-    var la = document.createElement("a");
-    la.textContent = letter;
-    la.style.marginRight = "6px";
-    (function(targetEl) {
-      la.onclick = function(e) {
-        e.preventDefault();
-        if (targetEl) {
-          targetEl.scrollIntoView(true);
-        }
-      };
-    })(letterHeadings[letter]);
-    jumpBar.appendChild(la);
+  // A-Z jump bar (only in alpha sort mode)
+  if (currentSort === "alpha") {
+    var jumpBar = document.createElement("div");
+    jumpBar.style.marginBottom = "8px";
+    for (var c = 65; c <= 90; c++) {
+      var letter = String.fromCharCode(c);
+      var la = document.createElement("a");
+      la.textContent = letter;
+      la.style.marginRight = "6px";
+      (function(targetEl) {
+        la.onclick = function(e) {
+          e.preventDefault();
+          if (targetEl) {
+            targetEl.scrollIntoView(true);
+          }
+        };
+      })(letterHeadings[letter]);
+      jumpBar.appendChild(la);
+    }
+    content.appendChild(jumpBar);
   }
-  content.appendChild(jumpBar);
 
   // Feature 4: Sort dropdown
   var sortBar = document.createElement("div");
@@ -1386,7 +1263,7 @@ function showUncategorized() {
   var html = "<div><b>Uncategorized Entries</b></div><br>";
   var found = false;
   for (var i = 0; i < entries.length; i++) {
-    if ((entries[i].topics || []).length === 0) {
+    if (entries[i].topics.length === 0) {
       found = true;
       html += '<div class="entry">';
       html += '<a onclick="showEntryFromUncategorized(\'' + entries[i].id + '\')">' + esc(entries[i].citation) + '</a>';
@@ -1558,8 +1435,7 @@ function saveBulkAddForm() {
       quotations: [],
       summaryHistory: [],
       seeAlso: [],
-      keywords: [],
-      editorialNotes: ""
+      keywords: []
     });
     count++;
   }
@@ -1637,7 +1513,7 @@ function showTopic(topicId, keepNav) {
   // Gather and sort topic entries
   var topicEntries = [];
   for (var i = 0; i < entries.length; i++) {
-    if ((entries[i].topics || []).indexOf(topicId) !== -1) {
+    if (entries[i].topics.indexOf(topicId) !== -1) {
       topicEntries.push(entries[i]);
     }
   }
@@ -1740,7 +1616,7 @@ function bulkRemoveFromTopic(topicId) {
   }
   var topicEntries = [];
   for (var i = 0; i < entries.length; i++) {
-    if ((entries[i].topics || []).indexOf(topicId) !== -1) topicEntries.push(entries[i]);
+    if (entries[i].topics.indexOf(topicId) !== -1) topicEntries.push(entries[i]);
   }
   topicEntries.sort(function(a, b) { return a.citation.localeCompare(b.citation); });
   var html = '<div class="edit-section">';
@@ -1762,9 +1638,8 @@ function doRemoveFromTopic(topicId) {
     var entryId = checks[c].value;
     for (var e = 0; e < entries.length; e++) {
       if (entries[e].id === entryId) {
-        var et = entries[e].topics || [];
-        var idx = et.indexOf(topicId);
-        if (idx !== -1) et.splice(idx, 1);
+        var idx = entries[e].topics.indexOf(topicId);
+        if (idx !== -1) entries[e].topics.splice(idx, 1);
         break;
       }
     }
@@ -1782,7 +1657,7 @@ function editTopic(topicId) {
   var html = '<div class="edit-section">';
   html += "<label>Select entries for " + esc(topicName) + ":</label><br><br>";
   for (var i = 0; i < entries.length; i++) {
-    var checked = (entries[i].topics || []).indexOf(topicId) !== -1 ? " checked" : "";
+    var checked = entries[i].topics.indexOf(topicId) !== -1 ? " checked" : "";
     html += '<div style="margin-bottom:6px"><input type="checkbox" id="tc_' + entries[i].id + '"' + checked + '> ' + esc(entries[i].citation) + '</div>';
   }
   html += '<br><button onclick="saveTopic(\'' + topicId + '\')">Save</button> ';
@@ -1795,7 +1670,6 @@ function saveTopic(topicId) {
   snapshot();
   for (var i = 0; i < entries.length; i++) {
     var cb = document.getElementById("tc_" + entries[i].id);
-    if (!entries[i].topics) entries[i].topics = [];
     var idx = entries[i].topics.indexOf(topicId);
     if (cb.checked && idx === -1) {
       entries[i].topics.push(topicId);
@@ -1898,7 +1772,7 @@ function showKeywordEntries(keyword, fromEntryId) {
   html += '<div><b>Keyword: ' + esc(keyword) + '</b> <span style="font-weight:normal;">(' + matchEntries.length + ' entr' + (matchEntries.length === 1 ? 'y' : 'ies') + ')</span></div><br>';
   for (var i = 0; i < matchEntries.length; i++) {
     html += '<div class="entry">';
-    html += '<a onclick="showEntryFromKeyword(\'' + escAttr(matchEntries[i].id) + '\', \'' + escOnclick(keyword) + '\')">' + esc(matchEntries[i].citation) + '</a>';
+    html += '<a onclick="showEntryFromKeyword(\'' + escAttr(matchEntries[i].id) + '\', \'' + escAttr(keyword) + '\')">' + esc(matchEntries[i].citation) + '</a>';
     if (matchEntries[i].shortSummary) {
       html += '<div class="short-summary">' + esc(matchEntries[i].shortSummary) + '</div>';
     }
@@ -1947,14 +1821,14 @@ function showEntry(entryId) {
   if (entry.keywords && entry.keywords.length > 0) {
     html += '<div style="margin-top:4px;">';
     for (var k = 0; k < entry.keywords.length; k++) {
-      html += '<a onclick="showKeywordEntries(\'' + escOnclick(entry.keywords[k]) + '\', \'' + escAttr(entryId) + '\')" style="display:inline-block; background:#e8e4d8; padding:2px 8px; margin:2px 4px 2px 0; font-size:0.85em; border-radius:3px; cursor:pointer; text-decoration:none; color:#000;">' + esc(entry.keywords[k]) + '</a>';
+      html += '<a onclick="showKeywordEntries(\'' + escAttr(entry.keywords[k]) + '\', \'' + escAttr(entryId) + '\')" style="display:inline-block; background:#e8e4d8; padding:2px 8px; margin:2px 4px 2px 0; font-size:0.85em; border-radius:3px; cursor:pointer; text-decoration:none; color:#000;">' + esc(entry.keywords[k]) + '</a>';
     }
     html += '</div>';
   }
   if (entry.shortSummary && entry.shortSummary.trim() !== "") {
     html += '<br><div><b>One Sentence Summary</b></div><div id="short-summary-display"><i>' + esc(entry.shortSummary) + '</i></div>';
   }
-  html += '<br><div><b>Longer Summary</b></div><div id="long-summary-display">' + esc(entry.longSummary) + "</div>";
+  html += '<br><div><b>Longer Summary</b></div><div id="long-summary-display" style="white-space:pre-wrap;">' + (entry.longSummary || '') + "</div>";
 
   // Key Quotations section
   html += '<br><div style="margin-top:10px;"><b>Key Quotations</b></div>';
@@ -2051,7 +1925,12 @@ function editFullEntry(entryId) {
   html += '<textarea id="edit-full-short" rows="3">' + esc(entry.shortSummary) + '</textarea>';
 
   html += '<label><b>Longer summary:</b></label>';
-  html += '<textarea id="edit-full-long" rows="10">' + esc(entry.longSummary) + '</textarea>';
+  html += '<div style="margin-top:4px; margin-bottom:2px;">' +
+    '<button type="button" onclick="document.execCommand(&quot;bold&quot;)" style="font-weight:bold; margin-right:4px; font-family:serif; font-size:inherit;">B</button>' +
+    '<button type="button" onclick="document.execCommand(&quot;italic&quot;)" style="font-style:italic; margin-right:4px; font-family:serif; font-size:inherit;">I</button>' +
+    '<button type="button" onclick="document.execCommand(&quot;underline&quot;)" style="text-decoration:underline; font-family:serif; font-size:inherit;">U</button>' +
+    '</div>';
+  html += '<div id="edit-full-long" contenteditable="true" style="width:100%; min-height:160px; font-family:serif; font-size:inherit; border:1px solid #ccc; padding:6px; box-sizing:border-box; overflow-y:auto;">' + (entry.longSummary || '') + '</div>';
 
   html += '<label><b>Editorial Notes:</b></label>';
   html += '<textarea id="edit-full-notes" rows="6">' + esc(entry.editorialNotes || '') + '</textarea>';
@@ -2086,7 +1965,7 @@ function addFullEntryQuotationRow() {
   html += '<label>Page:</label> <input type="text" id="fen_page_' + n + '" style="width:80px;" placeholder="e.g. 42">';
   html += ' <a onclick="document.getElementById(\'fen_row_' + n + '\').remove()" style="font-size:0.85em; color:#cc0000; cursor:pointer;">[remove]</a>';
   html += '</div>';
-  div.insertAdjacentHTML('beforeend', html);
+  div.innerHTML += html;
   window._feNewQuotationCount++;
 }
 
@@ -2111,7 +1990,7 @@ function saveFullEntry(entryId) {
   entry.citation = document.getElementById('edit-full-citation').value;
   entry.url = document.getElementById('edit-full-url').value.trim();
   entry.shortSummary = document.getElementById('edit-full-short').value;
-  entry.longSummary = document.getElementById('edit-full-long').value;
+  entry.longSummary = document.getElementById('edit-full-long').innerHTML;
   entry.editorialNotes = document.getElementById('edit-full-notes').value;
 
   // Collect quotations
@@ -2314,7 +2193,7 @@ function addNewQuotationRow() {
   html += '<label>Page:</label> <input type="text" id="nq_page_' + newQuotationCount + '" style="width:80px;" placeholder="e.g. 42">';
   html += ' <a onclick="document.getElementById(\'nq_row_' + newQuotationCount + '\').remove()" style="font-size:0.85em; color:#cc0000; cursor:pointer;">[remove]</a>';
   html += '</div>';
-  div.insertAdjacentHTML('beforeend', html);
+  div.innerHTML += html;
   newQuotationCount++;
 }
 
@@ -2583,7 +2462,7 @@ function showKeywordBrowser() {
   }
   var html = '<div style="margin-top:6px;">';
   for (var i = 0; i < allKw.length; i++) {
-    html += '<a onclick="filterByKeyword(\'' + escOnclick(allKw[i].keyword) + '\')" style="display:inline-block; background:#e8e4d8; padding:2px 8px; margin:3px 4px; font-size:0.85em; border-radius:3px; cursor:pointer;">' + esc(allKw[i].keyword) + ' <span style="color:#666;">(' + allKw[i].count + ')</span></a>';
+    html += '<a onclick="filterByKeyword(\'' + escAttr(allKw[i].keyword) + '\')" style="display:inline-block; background:#e8e4d8; padding:2px 8px; margin:3px 4px; font-size:0.85em; border-radius:3px; cursor:pointer;">' + esc(allKw[i].keyword) + ' <span style="color:#666;">(' + allKw[i].count + ')</span></a>';
   }
   html += '</div>';
   resultsDiv.innerHTML = html;
@@ -2724,17 +2603,12 @@ function deleteEntry(entryId) {
       if (idx !== -1) entries[j].seeAlso.splice(idx, 1);
     }
   }
-  // Clear the page immediately so the confirmation dialog disappears
-  document.getElementById("content").innerHTML = "";
-  navHistory = [];
-  try {
-    autoSave();
-    renderSidebar();
+  autoSave();
+  renderSidebar();
+  if (navHistory.length > 0) {
+    goBack();
+  } else {
     showHome();
-  } catch (err) {
-    console.error("Error after delete:", err);
-    // Ensure we still show home even if something fails
-    try { showHome(); } catch (e) {}
   }
 }
 
@@ -2879,7 +2753,7 @@ function exportTopicPDF(topicId) {
   }
   var topicEntries = [];
   for (var i = 0; i < entries.length; i++) {
-    if ((entries[i].topics || []).indexOf(topicId) !== -1) {
+    if (entries[i].topics.indexOf(topicId) !== -1) {
       topicEntries.push(entries[i]);
     }
   }
@@ -3136,7 +3010,7 @@ function showBibTeXImportPreview(parsed) {
   html += '<select id="import-topic-select">';
   html += '<option value="">(Uncategorized)</option>';
   for (var t = 0; t < topics.length; t++) {
-    html += '<option value="' + escAttr(topics[t].id) + '">' + esc(topics[t].name) + '</option>';
+    html += '<option value="' + esc(topics[t]) + '">' + esc(topics[t]) + '</option>';
   }
   html += '</select></div>';
   html += '<div style="margin-bottom:10px;"><input type="checkbox" id="import-skip-dupes" checked> Skip entries whose title already exists in bibliography</div>';
@@ -3197,7 +3071,7 @@ function doImportBibTeX() {
       }
     }
     var newEntry = {
-      id: "entry_" + Date.now() + "_" + c,
+      id: generateId(),
       citation: citation,
       shortSummary: "",
       longSummary: f.abstract || "",
@@ -3248,10 +3122,9 @@ function showStatistics() {
 
   for (var i = 0; i < entries.length; i++) {
     var e = entries[i];
-    var et = e.topics || [];
-    if (et.length === 0) uncategorized++;
-    for (var t = 0; t < et.length; t++) {
-      if (topicCounts[et[t]]) topicCounts[et[t]].count++;
+    if (e.topics.length === 0) uncategorized++;
+    for (var t = 0; t < e.topics.length; t++) {
+      if (topicCounts[e.topics[t]]) topicCounts[e.topics[t]].count++;
     }
     if (e.shortSummary && e.shortSummary.trim() !== "") withSummary++;
     if (e.longSummary && e.longSummary.trim() !== "") withLongSummary++;
@@ -3489,8 +3362,6 @@ function exportCompletePDF() {
 // --- INIT ---
 // Handled by enterSite() after password check
 </script>
-
-
 
 </body>
 </html>
